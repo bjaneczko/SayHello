@@ -18,19 +18,19 @@ export const InputWrapper = styled.div`
 `;
 
 export const FormLabel = styled.label`
-  margin-top: 1rem;
+  margin-left: 1rem;
 `;
 
 export const FormInput = styled(FilteredPropsInputField)`
   background-color: rgb(245, 248, 250);
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 30px;
   font-size: 1rem;
   line-height: 1.5rem;
   font-style: normal;
   font-weight: 400;
   margin-top: 0.5rem;
-  padding: 0.75rem 0.75rem;
+  padding: 0.75rem 1rem;
 
   &:focus,
   &:active {
@@ -56,16 +56,16 @@ export const FormInput = styled(FilteredPropsInputField)`
 
 export const ErrorContainer = styled.div`
   height: 10px;
-  padding: 8px 6px 0;
+  padding: 0.6rem 1rem 1rem;
   font-size: 0.8rem;
   color: rgb(120, 27, 0);
 `;
 
 export const Submit = styled.button`
   width: 100%;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   background-color: #0083b0;
-  border-radius: 8px;
+  border-radius: 30px;
   border: none;
   text-align: center;
   font-size: 1rem;
