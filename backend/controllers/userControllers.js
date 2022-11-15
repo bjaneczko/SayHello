@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
+  const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
@@ -21,7 +21,6 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    pic,
   });
 
   if (user) {
@@ -29,12 +28,12 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      pic: user.pic,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
     res.status(400);
-    throw new Error("Failed to create the user");
+    throw new Error("User not found");
   }
 });
 
@@ -49,7 +48,6 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      pic: user.pic,
       token: generateToken(user._id),
     });
   } else {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Formik, Form, ErrorMessage, Field } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import {
   FormContainer,
@@ -10,10 +12,9 @@ import {
   InputWrapper,
   ErrorContainer,
   ToggleButton,
-  TestUserButton,
 } from "./AuthForm.styled";
 
-const validationSchema = Yup.object().shape({
+const signupValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Your name is too short")
     .required("Please enter your name"),
@@ -25,30 +26,61 @@ const validationSchema = Yup.object().shape({
     .required("Please enter your password"),
 });
 
+const signinValidationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("E-mail is not valid!")
+    .required("Please enter your email"),
+  password: Yup.string()
+    .min(6, "Password has to be longer than 6 characters!")
+    .required("Please enter your password"),
+});
+
+
 const AuthForm = () => {
   const [isNew, setIsNew] = useState(false);
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const submitHandler = async (name, email, password) => {
+
+      let data;
+      await axios.post(`/api/user/${isNew ? '': 'login'}`, {
+        name: name,
+        email: email,
+        password: password
+      })
+      .then(function (response) {
+        data = response.data;
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        if(!isNew) {
+          navigate("/chats");
+        } else {
+          setIsNew(false)
+        }
+      })
+      .catch(function (error) {
+        alert(error.response.data.message);
+      });
+
+  };
 
   const toggleIsNew = () => {
     setIsNew((current) => !current);
   };
+
   return (
     <FormContainer>
       <Formik
         initialValues={{
-          name: name,
-          email: email,
-          password: password,
+          name: "",
+          email: "",
+          password: "",
         }}
-        validationSchema={validationSchema}
+        validationSchema={isNew ? signupValidationSchema : signinValidationSchema}
         onSubmit={(values, actions) => {
-          setName(values.name);
-          setEmail(values.email);
-          setPassword(values.password);
-
-          console.log(name, email, password);
+          const name = values.name;
+          const email = values.email;
+          const password = values.password;
+          submitHandler(name, email, password);
 
           const timeOut = setTimeout(() => {
             actions.setSubmitting(false);
@@ -61,7 +93,7 @@ const AuthForm = () => {
           return (
             <>
               <Form name="contact" method="post" onSubmit={handleSubmit}>
-                <InputWrapper>
+                {isNew && (<><InputWrapper>
                   <FormLabel htmlFor="name">Name</FormLabel>
                   <FormInput
                     type="text"
@@ -69,14 +101,13 @@ const AuthForm = () => {
                     autoCorrect="off"
                     autoComplete="name"
                     placeholder="Type your name"
-                    valid={touched.name && !errors.name}
+                    valid={isNew && touched.name && !errors.name}
                     error={touched.name && errors.name}
                   />
                 </InputWrapper>
                 <ErrorContainer>
                   {errors.name && touched.name && <p>{errors.name}</p>}
-                </ErrorContainer>
-
+                </ErrorContainer></>)}
                 <InputWrapper>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <FormInput
@@ -103,7 +134,7 @@ const AuthForm = () => {
                     name="password"
                     autoCorrect="off"
                     autoComplete="name"
-                    placeholder="Type your email"
+                    placeholder="Type your password"
                     valid={touched.password && !errors.password}
                     error={touched.password && errors.password}
                   />
