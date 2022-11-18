@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthForm from "../components/authForm/AuthForm";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ const Home = () => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
     if (user) {
-      navigate("/chats");
+      navigate("/");
     }
   }, [navigate]);
 

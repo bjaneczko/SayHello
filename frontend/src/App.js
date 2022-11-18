@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Routing from "./components/Routing/Routing";
@@ -22,9 +21,7 @@ const App = () => {
   return (
     <AppContainer>
       <GlobalStyle />
-      <Router>
-        <Routing />
-      </Router>
+      <Routing />
     </AppContainer>
   );
 };
