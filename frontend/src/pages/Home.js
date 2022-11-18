@@ -1,6 +1,7 @@
 import React from "react";
 import AuthForm from "../components/authForm/AuthForm";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = styled.div`
   width: 100vw;
@@ -27,6 +28,16 @@ export const TestUserButton = styled.button`
 `;
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (user) {
+      navigate("/chats");
+    }
+  }, [navigate]);
+
   return (
     <HomePage>
       <AuthForm />
