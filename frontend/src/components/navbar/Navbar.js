@@ -3,6 +3,7 @@ import { GoPerson } from "react-icons/go";
 import { MdNotifications } from "react-icons/md";
 import { SiAddthis } from "react-icons/si";
 import Sidebar from "../sidebar/Sidebar";
+import { Modal } from "../modal/Modal";
 import { ChatState } from "../../context/ChatProvider";
 import axios from "axios";
 
@@ -13,8 +14,10 @@ import {
   InformationContainer,
   InformationModal,
 } from "./Navbar.styled";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
 
   const openSidebar = () => {
@@ -25,6 +28,11 @@ const Navbar = () => {
 
   const openModal = () => {
     setShowModal((prev) => !prev);
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/");
   };
 
   const [search, setSearch] = useState("");
@@ -111,6 +119,12 @@ const Navbar = () => {
         loading={loading}
         searchResults={searchResults}
         accessChat={accessChat}
+      />
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        user={user}
+        logoutHandler={logoutHandler}
       />
     </>
   );
