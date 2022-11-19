@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Sidebar from "../components/sidebar/Sidebar";
+import Navbar from "../components/navbar/Navbar";
 import MyChats from "../components/myChats/MyChats";
 import CurrentChat from "../components/CurrentChat/CurrentChat";
 import { ChatState } from "../context/ChatProvider";
@@ -20,11 +20,10 @@ const ChatsContainer = styled.div`
 
 const ChatPage = () => {
   const user = ChatState();
-  console.log(user);
 
   return (
     <PageContainer>
-      {user && <Sidebar />}
+      {user && <Navbar />}
       <ChatsContainer>
         {user && <MyChats />}
         {user && <CurrentChat />}
