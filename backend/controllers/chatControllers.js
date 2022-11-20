@@ -9,8 +9,9 @@ const accessChat = asyncHandler(async (req, res) => {
     console.log("UserId param not sent with request");
     return res.sendStatus(400);
   }
+  console.log(req.user);
 
-  let isChat = await Chat.find({
+  var isChat = await Chat.find({
     isGroupChat: false,
     $and: [
       { users: { $elemMatch: { $eq: req.user._id } } },
@@ -24,7 +25,6 @@ const accessChat = asyncHandler(async (req, res) => {
     path: "latestMessage.sender",
     select: "name email",
   });
-
   if (isChat.length > 0) {
     res.send(isChat[0]);
   } else {
