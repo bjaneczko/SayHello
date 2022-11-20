@@ -139,8 +139,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
                   placeholder="Search for users"
                   onChange={(e) => handleSearch(e.target.value)}
                 />
-
-                <ResultsWrapper w="100%" d="flex" flexWrap="wrap">
+                <ResultsWrapper>
                   {selectedUsers.map((user) => (
                     <UserBadge
                       key={user._id}
@@ -165,7 +164,6 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
                   )}
                 </ResultsWrapper>
 
-                {/* //selectedUsers // render searched users */}
                 <CreateButton onClick={handleSubmit}>Create</CreateButton>
               </ModalContent>
               <CloseModalButton
