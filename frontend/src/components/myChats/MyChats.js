@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { ChatState } from "../../context/ChatProvider";
 import { getSender } from "../../config/ChatLogic";
+import GroupChatModal from "../groupChatModal/GroupChatModal";
 
 import {
   ChatsContainer,
@@ -14,6 +15,12 @@ import {
 } from "./MyChats.styled";
 
 const MyChats = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
 
@@ -43,33 +50,36 @@ const MyChats = () => {
   }, [user]);
 
   return (
-    <ChatsContainer>
-      <Header>
-        <HeaderText>MyChats</HeaderText>
-        <HeaderButton>Group chat</HeaderButton>
-      </Header>
-      <Chats>
-        {chats
-          ? chats.map((chat) => (
-              <ChatCard
-                onClick={() => setSelectedChat(chat)}
-                key={chat._id}
-                style={
-                  chat === selectedChat
-                    ? { backgroundColor: " #aac3d4" }
-                    : { backgroundColor: "#dde7ee" }
-                }
-              >
-                <ChatUser>
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
-                </ChatUser>
-              </ChatCard>
-            ))
-          : "no chats"}
-      </Chats>
-    </ChatsContainer>
+    <>
+      <ChatsContainer>
+        <Header>
+          <HeaderText>MyChats</HeaderText>
+          <HeaderButton onClick={openModal}>Group chat</HeaderButton>
+        </Header>
+        <Chats>
+          {chats
+            ? chats.map((chat) => (
+                <ChatCard
+                  onClick={() => setSelectedChat(chat)}
+                  key={chat._id}
+                  style={
+                    chat === selectedChat
+                      ? { backgroundColor: " #aac3d4" }
+                      : { backgroundColor: "#dde7ee" }
+                  }
+                >
+                  <ChatUser>
+                    {!chat.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
+                  </ChatUser>
+                </ChatCard>
+              ))
+            : "no chats"}
+        </Chats>
+      </ChatsContainer>
+      <GroupChatModal showModal={showModal} setShowModal={setShowModal} />
+    </>
   );
 };
 

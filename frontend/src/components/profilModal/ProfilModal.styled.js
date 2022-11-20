@@ -69,7 +69,6 @@ export const ModalText = styled.div`
 `;
 
 export const LogoutButton = styled.button`
-  right: 10px;
   background-color: #0083b0;
   border-radius: 30px;
   border: none;

@@ -3,7 +3,7 @@ import { GoPerson } from "react-icons/go";
 import { MdNotifications } from "react-icons/md";
 import { SiAddthis } from "react-icons/si";
 import Sidebar from "../sidebar/Sidebar";
-import { Modal } from "../modal/Modal";
+import { Modal } from "../profilModal/ProfilModal";
 import { ChatState } from "../../context/ChatProvider";
 import axios from "axios";
 

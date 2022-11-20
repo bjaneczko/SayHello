@@ -10,7 +10,7 @@ import {
   ModalText,
   UserAvatar,
   LogoutButton,
-} from "./Modal.styled";
+} from "./ProfilModal.styled";
 
 export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
   const modalRef = useRef();

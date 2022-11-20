@@ -1,7 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import Routing from "./routing/Routing";
+import Routing from "./components/routing/Routing";
 import styled from "@emotion/styled";
 
 const GlobalStyle = createGlobalStyle`
