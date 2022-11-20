@@ -14,7 +14,7 @@ import {
   ChatUser,
 } from "./MyChats.styled";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -36,7 +36,6 @@ const MyChats = () => {
         data = response.data;
         setChats(data);
       });
-      console.log(data);
     } catch (error) {
       console.log(error.message);
     }
@@ -47,11 +46,11 @@ const MyChats = () => {
     if (user?.token) {
       fetchChats();
     }
-  }, [user]);
+  }, [fetchAgain, user]);
 
   return (
     <>
-      <ChatsContainer>
+      <ChatsContainer selectedChat={selectedChat}>
         <Header>
           <HeaderText>MyChats</HeaderText>
           <HeaderButton onClick={openModal}>Group chat</HeaderButton>
@@ -62,11 +61,7 @@ const MyChats = () => {
                 <ChatCard
                   onClick={() => setSelectedChat(chat)}
                   key={chat._id}
-                  style={
-                    chat === selectedChat
-                      ? { backgroundColor: " #aac3d4" }
-                      : { backgroundColor: "#dde7ee" }
-                  }
+                  isSelected={chat === selectedChat}
                 >
                   <ChatUser>
                     {!chat.isGroupChat

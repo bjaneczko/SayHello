@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Navbar from "../components/navbar/Navbar";
 import MyChats from "../components/myChats/MyChats";
@@ -15,19 +15,22 @@ const PageContainer = styled.div`
 const ChatsContainer = styled.div`
   height: calc(100% - 100px);
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   padding: 20px;
 `;
 
 const ChatPage = () => {
   const user = ChatState();
+  const [fetchAgain, setFetchAgain] = useState(false);
 
   return (
     <PageContainer>
       {user && <Navbar />}
       <ChatsContainer>
-        {user && <MyChats />}
-        {user && <CurrentChat />}
+        {user && <MyChats fetchAgain={fetchAgain} />}
+        {user && (
+          <CurrentChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        )}
       </ChatsContainer>
     </PageContainer>
   );

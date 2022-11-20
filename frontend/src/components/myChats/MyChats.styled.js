@@ -1,11 +1,16 @@
 import styled from "@emotion/styled";
 
 export const ChatsContainer = styled.div`
+  @media (max-width: 760px) {
+    display: ${(props) => (props.selectedChat ? "none" : "flex")};
+  }
+  max-width: 640px;
   display: flex;
   flex-direction: column;
   background: white;
   border-radius: 30px;
   padding: 40px;
+  flex: 1;
 `;
 
 export const Header = styled.div`
@@ -58,6 +63,7 @@ export const ChatCard = styled.div`
   padding: 0.75rem 1rem;
   display: flex;
   flex-direction: column;
+  background: ${(props) => (props.isSelected ? "#aac3d4" : "#dde7ee")};
 
   &:hover {
     cursor: pointer;
