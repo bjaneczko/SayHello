@@ -14,7 +14,6 @@ export const SidebarWrapper = styled.div`
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
-  position: relative;
   z-index: 10;
 `;
 

@@ -35,32 +35,30 @@ const signinValidationSchema = Yup.object().shape({
     .required("Please enter your password"),
 });
 
-
 const AuthForm = () => {
   const [isNew, setIsNew] = useState(false);
   const navigate = useNavigate();
 
   const submitHandler = async (name, email, password) => {
-
-      let data;
-      await axios.post(`/api/user/${isNew ? '': 'login'}`, {
+    let data;
+    await axios
+      .post(`/api/user/${isNew ? "" : "login"}`, {
         name: name,
         email: email,
-        password: password
+        password: password,
       })
       .then(function (response) {
         data = response.data;
         localStorage.setItem("userInfo", JSON.stringify(data));
-        if(!isNew) {
+        if (!isNew) {
           navigate("/chats");
         } else {
-          setIsNew(false)
+          setIsNew(false);
         }
       })
       .catch(function (error) {
         alert(error.response.data.message);
       });
-
   };
 
   const toggleIsNew = () => {
@@ -75,7 +73,9 @@ const AuthForm = () => {
           email: "",
           password: "",
         }}
-        validationSchema={isNew ? signupValidationSchema : signinValidationSchema}
+        validationSchema={
+          isNew ? signupValidationSchema : signinValidationSchema
+        }
         onSubmit={(values, actions) => {
           const name = values.name;
           const email = values.email;
@@ -93,21 +93,25 @@ const AuthForm = () => {
           return (
             <>
               <Form name="contact" method="post" onSubmit={handleSubmit}>
-                {isNew && (<><InputWrapper>
-                  <FormLabel htmlFor="name">Name</FormLabel>
-                  <FormInput
-                    type="text"
-                    name="name"
-                    autoCorrect="off"
-                    autoComplete="name"
-                    placeholder="Type your name"
-                    valid={isNew && touched.name && !errors.name}
-                    error={touched.name && errors.name}
-                  />
-                </InputWrapper>
-                <ErrorContainer>
-                  {errors.name && touched.name && <p>{errors.name}</p>}
-                </ErrorContainer></>)}
+                {isNew && (
+                  <>
+                    <InputWrapper>
+                      <FormLabel htmlFor="name">Name</FormLabel>
+                      <FormInput
+                        type="text"
+                        name="name"
+                        autoCorrect="off"
+                        autoComplete="name"
+                        placeholder="Type your name"
+                        valid={isNew && touched.name && !errors.name}
+                        error={touched.name && errors.name}
+                      />
+                    </InputWrapper>
+                    <ErrorContainer>
+                      {errors.name && touched.name && <p>{errors.name}</p>}
+                    </ErrorContainer>
+                  </>
+                )}
                 <InputWrapper>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <FormInput
@@ -146,7 +150,7 @@ const AuthForm = () => {
                 </ErrorContainer>
 
                 <Submit type="submit" disabled={!isValid || isSubmitting}>
-                  {!isNew ? `Sign in` : `Sign up`}
+                  {!isNew ? `Login` : `Register`}
                 </Submit>
               </Form>
             </>
@@ -158,7 +162,7 @@ const AuthForm = () => {
         {!isNew ? `Haven't got account?` : `Already got an account?`}
 
         <ToggleButton onClick={toggleIsNew}>
-          {isNew ? `Sign in` : `Sign up`}
+          {isNew ? `Login` : `Register`}
         </ToggleButton>
       </p>
     </FormContainer>

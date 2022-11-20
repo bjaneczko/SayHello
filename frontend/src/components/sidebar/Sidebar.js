@@ -29,7 +29,6 @@ const Sidebar = ({
     config: {
       duration: 250,
     },
-    opacity: showSidebar ? 1 : 0,
     transform: showSidebar ? `translateX(0%)` : `translateX(-100%)`,
   });
 

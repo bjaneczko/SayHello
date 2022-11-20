@@ -13,6 +13,7 @@ const PageContainer = styled.div`
 `;
 
 const ChatsContainer = styled.div`
+  height: calc(100% - 100px);
   display: flex;
   justify-content: space-between;
   padding: 20px;
