@@ -36,7 +36,7 @@ export const ModalContent = styled.div`
   align-items: center;
   line-height: 1.8;
   color: #141414;
-  padding: 5rem 3rem;
+  padding: 3rem 3rem 3rem;
 `;
 
 export const CloseModalButton = styled(MdClose)`
@@ -125,17 +125,25 @@ export const SearchResultContainer = styled.div`
   padding: 0.75rem 1rem;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
-    background-color: #0083b0;
-    color: white;
-  }
-  &:active {
-    background-color: #007399;
+    background-color: #aac3d4;
   }
 `;
 
 export const ResultHeader = styled.div`
   font-size: 14px;
+`;
+
+export const UserBadge = styled.div`
+  padding: 2px 4px;
+  border-radius: 8px;
+  font-size: 12px;
+  background-color: #ff5252;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff0000;
+  }
 `;

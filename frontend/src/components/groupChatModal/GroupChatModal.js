@@ -14,6 +14,7 @@ import {
   SearchResultContainer,
   ResultHeader,
   ResultsWrapper,
+  UserBadge,
 } from "./GroupChatModal.styled";
 
 const GroupChatModal = ({ showModal, setShowModal }) => {
@@ -85,6 +86,10 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
+  const handleDelete = (delUser) => {
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
+  };
+
   const modalRef = useRef();
 
   const animation = useSpring({
@@ -123,7 +128,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
           <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
               <ModalContent>
-                <ModalHeader>Create Group Chat</ModalHeader>
+                <ModalHeader>Group chat</ModalHeader>
                 <FormInput
                   type="text"
                   placeholder="Chat Name"
@@ -134,6 +139,17 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
                   placeholder="Search for users"
                   onChange={(e) => handleSearch(e.target.value)}
                 />
+
+                <ResultsWrapper w="100%" d="flex" flexWrap="wrap">
+                  {selectedUsers.map((user) => (
+                    <UserBadge
+                      key={user._id}
+                      onClick={() => handleDelete(user)}
+                    >
+                      {user.name} x
+                    </UserBadge>
+                  ))}
+                </ResultsWrapper>
                 <ResultsWrapper>
                   {loading ? (
                     <div>Loading</div>
