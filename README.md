@@ -2,14 +2,14 @@
 Web application which allows you to chat with other users - directly or by
 creating a group.
 
-#Built With
+# Built With
 React - A JavaScript library for building user interfaces
 Node.js - JavaScript enviroment
 Express - Node.js web application framework
 MongoDB - Database for modern apps
 Emotion - library designed for writing css styles with JavaScript.
 
-#Installation
+# Installation
 Intalling all dependencies for server.
 
 npm install
