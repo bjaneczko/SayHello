@@ -3,27 +3,33 @@ Web application which allows you to chat with other users - directly or by
 creating a group.
 
 # Built With
-React - A JavaScript library for building user interfaces
-
-Node.js - JavaScript enviroment
-
-Express - Node.js web application framework
-
-MongoDB - Database for modern apps
-
-Emotion - library designed for writing css styles with JavaScript.
+* [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+* [Node.js](nodejs.org) - JavaScript enviroment
+* [Express](https://expressjs.com/) - Node.js web application framework
+* [MongoDB](https://www.mongodb.com/) - Database for modern apps
+* [Emotion](https://emotion.sh/docs/introduction) - library designed for writing css styles with JavaScript.
 
 # Installation
-Intalling all dependencies for server.
+Intalling all dependencies for server (/backend)
 
+```
 npm install
+```
+
 Intalling all dependencies for client side. Before that make sure you are in the client folder ( /frontend )
 
+```
 npm install
-Running server side with package nodemon
+```
 
-npm run start
-Running client side. Before that make sure you are in the client folder ( /frontend )
+Running server side with package nodemon (/backend)
 
-npm start server 
-How to run application after build. Command started sever and client application
+```
+npm run server 
+```
+
+Running client side. Before that make sure you are in the client folder ( /client )
+
+```
+npm start 
+```
