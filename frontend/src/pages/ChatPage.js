@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Navbar from "../components/navbar/Navbar";
-import MyChats from "../components/myChats/MyChats";
-import CurrentChat from "../components/CurrentChat/CurrentChat";
+import ChatsList from "../components/chatsList/ChatsList";
+import CurrentChat from "../components/currentChat/CurrentChat";
 import { ChatState } from "../context/ChatProvider";
 
 const PageContainer = styled.div`
@@ -27,7 +27,7 @@ const ChatPage = () => {
     <PageContainer>
       {user && <Navbar />}
       <ChatsContainer>
-        {user && <MyChats fetchAgain={fetchAgain} />}
+        {user && <ChatsList fetchAgain={fetchAgain} />}
         {user && (
           <CurrentChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         )}
