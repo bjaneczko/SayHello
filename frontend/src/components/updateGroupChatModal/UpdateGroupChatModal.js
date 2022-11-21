@@ -148,7 +148,7 @@ const UpdateGroupChatModal = ({
 
       user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
-      // fetchMessages();
+      fetchMessages();
       setLoading(false);
     } catch (error) {
       console.log(error.response.data.message);

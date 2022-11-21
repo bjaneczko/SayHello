@@ -51,7 +51,33 @@ export const MessagesContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   padding: 10px;
-  background: #E8E8E8;
+  background: #e8e8e8;
   border-radius: 20px;
-  overflowY="hidden";
+  overflow-y: hidden;
+`;
+
+export const FormWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+`;
+
+export const FormInput = styled.input`
+  background-color: rgb(245, 248, 250);
+  border: 1px solid transparent;
+  border-radius: 20px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  padding: 0.75rem 1rem;
+  flex: 1;
+
+  &:focus,
+  &:active {
+    box-shadow: none;
+    outline: none;
+  }
 `;
