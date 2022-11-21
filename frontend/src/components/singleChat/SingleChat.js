@@ -17,7 +17,7 @@ import {
   FormInput,
 } from "./SingleChat.styled";
 
-const ENDPOINT = "https://say-hello-coo0.onrender.com";
+const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {

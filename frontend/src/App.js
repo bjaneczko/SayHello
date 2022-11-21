@@ -1,15 +1,7 @@
 import React from "react";
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
+import { Global, css } from "@emotion/react";
 import Routing from "./components/routing/Routing";
 import styled from "@emotion/styled";
-
-const GlobalStyle = createGlobalStyle`
-  ${reset}
-  body {
-    font-family: "Roboto", sans-serif;
-  }
-`;
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -20,7 +12,17 @@ const AppContainer = styled.div`
 const App = () => {
   return (
     <AppContainer>
-      <GlobalStyle />
+      <Global
+        styles={css`
+          body {
+            font-family: "Roboto", sans-serif;
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+          }
+        `}
+      />
       <Routing />
     </AppContainer>
   );
