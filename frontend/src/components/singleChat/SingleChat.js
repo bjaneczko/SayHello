@@ -5,6 +5,7 @@ import { getSender } from "../../config/ChatLogic";
 import { FaArrowLeft, FaEye, FaPen } from "react-icons/fa";
 import ScrollableChat from "../scrollableChat/ScrollableChat";
 import UpdateGroupChatModal from "../updateGroupChatModal/UpdateGroupChatModal";
+import io from "socket.io-client";
 
 import {
   ChatHeader,
@@ -16,11 +17,15 @@ import {
   FormInput,
 } from "./SingleChat.styled";
 
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
+
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const { user, selectedChat, setSelectedChat } = ChatState();
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
 
   const [newMessage, setNewMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -31,7 +36,32 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     fetchMessages();
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    const fallbackUser = JSON.parse(localStorage.getItem("userInfo"));
+    socket.emit("setup", fallbackUser);
+    socket.on("connection", () => setSocketConnected(true));
+  }, []);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        // if (!notification.includes(newMessageRecieved)) {
+        //   setNotification([newMessageRecieved, ...notification]);
+        //   setFetchAgain(!fetchAgain);
+        // }
+        // console.log(user);
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -51,7 +81,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       );
       setMessages(data);
       setLoading(false);
-      //   socket.emit("join chat", selectedChat._id);
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       console.log(`Failed to Load the Messages`);
     }
@@ -76,7 +106,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
 
-        // socket.emit("new message", data);
+        socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         console.log("Failed to send the Message");
