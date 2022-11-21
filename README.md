@@ -4,9 +4,13 @@ creating a group.
 
 # Built With
 React - A JavaScript library for building user interfaces
+
 Node.js - JavaScript enviroment
+
 Express - Node.js web application framework
+
 MongoDB - Database for modern apps
+
 Emotion - library designed for writing css styles with JavaScript.
 
 # Installation
