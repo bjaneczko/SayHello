@@ -1,7 +1,6 @@
 import React from "react";
 import { ChatState } from "../../context/ChatProvider";
 import SingleChat from "../singleChat/SingleChat";
-import { Modal } from "../profilModal/ProfilModal";
 
 import { CurrentChatContainer } from "./CurrentChat.styled";
 
