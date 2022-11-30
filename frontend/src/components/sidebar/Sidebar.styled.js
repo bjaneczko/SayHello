@@ -1,43 +1,28 @@
-import styled from "@emotion/styled";
-
-export const Background = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  display: flex;
-`;
+import styled from '@emotion/styled';
 
 export const SidebarWrapper = styled.div`
-  width: 300px;
   height: 100%;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
-  z-index: 10;
+  width: 100%;
+  margin-top: 1rem;
 `;
 
 export const SidebarContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  line-height: 1.8;
-  color: #141414;
+  gap: 1rem;
 `;
 
 export const SearchInput = styled.input`
-  position: absolute;
-  left: 10px;
+  width: 100%;
   background-color: #dde7ee;
   border: 1px solid transparent;
-  border-radius: 30px;
+  border-radius: 1rem 0 0 1rem;
   font-size: 1rem;
   line-height: 1.5rem;
   font-style: normal;
   font-weight: 400;
-  padding: 0.75rem 1rem;
-  z-index: 2;
+  padding: 0.7rem 1.5rem;
 
   &:focus,
   &:active {
@@ -47,40 +32,32 @@ export const SearchInput = styled.input`
 `;
 
 export const InputContainer = styled.div`
-  margin-top: 20px;
-  height: 50px;
   display: flex;
 `;
 
 export const Button = styled.button`
-  position: absolute;
-  right: 10px;
-  background-color: #0083b0;
-  border-radius: 30px;
+  background-color: #705df2;
+  border-radius: 0 1rem 1rem 0;
   border: none;
-  text-align: center;
   font-size: 1rem;
   color: white;
-  padding: 16px 1rem 16px 4rem;
+  padding: 0.7rem 1.5rem;
   z-index: 1;
+  cursor: pointer;
 
   &:focus,
-  &:hover {
-    cursor: pointer;
-  }
-
+  &:hover,
   &:active {
-    background-color: #007399;
+    background-color: #4e41a9;
   }
 `;
 
 export const SearchResultContainer = styled.div`
-  width: 250px;
-  margin-top: 1rem;
+  width: 100%;
   background-color: #dde7ee;
   border: 1px solid transparent;
-  border-radius: 30px;
-  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  padding: 0.75rem 0;
   display: flex;
   flex-direction: column;
 
@@ -95,10 +72,12 @@ export const SearchResultContainer = styled.div`
 `;
 
 export const ResultHeader = styled.div`
+  padding: 0 1rem;
   font-size: 14px;
   font-weight: 600;
 `;
 
 export const ResultText = styled.div`
+  padding: 0 1rem;
   font-size: 12px;
 `;

@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const CurrentChatContainer = styled.div`
   @media (max-width: 760px) {
-    display: ${(props) => (props.selectedChat ? "flex" : "none")};
+    display: ${(props) => (props.selectedChat ? 'flex' : 'none')};
   }
   display: flex;
   flex-direction: column;

@@ -1,47 +1,40 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 60px;
-  background-color: white;
+  background-color: #0e1d29;
+  border-bottom: 5px solid #1c2a34;
 `;
 
-export const NewChatButton = styled.button`
+export const LogoContainer = styled.div`
   height: 100%;
-  border: none;
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: white;
-  font-size: 1rem;
-  padding: 0 20px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-`;
-
-export const IconContainer = styled.div`
-  margin: 2px 0 0;
+  padding: 0 40px;
 `;
 
 export const InformationContainer = styled.div`
   display: flex;
+  padding: 0 20px;
+  background: ;
 `;
 
 export const InformationModal = styled.button`
   height: 100%;
   border: none;
-  background-color: white;
-
-  font-size: 1.5rem;
+  color: #705df2;
+  font-size: 2rem;
   padding: 5px 20px 0;
   cursor: pointer;
+  background: none;
 
+  &:active,
+  &:focus,
   &:hover {
-    background-color: #f0f0f0;
+    color: #4e41a9;
   }
 `;

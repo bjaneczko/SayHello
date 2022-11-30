@@ -1,27 +1,38 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { ChatState } from "../../context/ChatProvider";
-import { getSender } from "../../config/ChatLogic";
-import GroupChatModal from "../groupChatModal/GroupChatModal";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { ChatState } from '../../context/ChatProvider';
+import { getSender } from '../../config/ChatLogic';
+import GroupChatModal from '../groupChatModal/GroupChatModal';
+import Sidebar from '../sidebar/Sidebar';
 
 import {
   ChatsContainer,
   Header,
   HeaderText,
-  HeaderButton,
+  Button,
   Chats,
   ChatCard,
-  ChatUser,
-} from "./ChatsList.styled";
+} from './ChatsList.styled';
 
 const ChatsList = ({ fetchAgain }) => {
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingChat, setLoadingChat] = useState();
+
   const [showModal, setShowModal] = useState(false);
+
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const openSidebar = () => {
+    setShowSidebar((prev) => !prev);
+  };
 
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
 
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const { selectedChat, setSelectedChat, chats, setChats, user } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
 
   const fetchChats = async () => {
@@ -32,7 +43,7 @@ const ChatsList = ({ fetchAgain }) => {
         },
       };
       let data;
-      await axios.get("/api/chat", config).then(function (response) {
+      await axios.get('/api/chat', config).then(function (response) {
         data = response.data;
         setChats(data);
       });
@@ -42,38 +53,98 @@ const ChatsList = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
     if (user?.token) {
       fetchChats();
     }
   }, [fetchAgain, user]);
 
+  const handleSearch = async () => {
+    if (!search) {
+      console.log('Provide name or smth');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
+
+      setLoading(false);
+      setSearchResults(data);
+    } catch (error) {
+      console.log('Failed to Load the Search Results');
+    }
+  };
+
+  const accessChat = async (userId) => {
+    try {
+      setLoadingChat(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(`/api/chat`, { userId }, config);
+
+      if (!chats?.find((c) => c._id === data._id)) {
+        setChats([data, ...chats]);
+      }
+      setSelectedChat(data);
+      setLoadingChat(false);
+      console.log('Success');
+    } catch (error) {
+      console.log(error.message);
+      console.log('Fail');
+    }
+  };
+
   return (
     <>
       <ChatsContainer selectedChat={selectedChat}>
         <Header>
-          <HeaderText>MyChats</HeaderText>
-          <HeaderButton onClick={openModal}>Group chat</HeaderButton>
+          <HeaderText>Chats</HeaderText>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Button onClick={openSidebar}>New message</Button>
+            {/* <Button onClick={openModal}>Group chat</Button> */}
+          </div>
         </Header>
         <Chats>
-          {chats
-            ? chats.map((chat) => (
-                <ChatCard
-                  onClick={() => setSelectedChat(chat)}
-                  key={chat._id}
-                  isSelected={chat === selectedChat}
-                >
-                  <ChatUser>
-                    {!chat.isGroupChat
-                      ? getSender(loggedUser, chat.users)
-                      : chat.chatName}
-                  </ChatUser>
-                </ChatCard>
-              ))
-            : "no chats"}
+          <GroupChatModal showModal={showModal} setShowModal={setShowModal} />
+          {chats && !showSidebar ? (
+            chats.map((chat) => (
+              <ChatCard
+                onClick={() => setSelectedChat(chat)}
+                key={chat._id}
+                isSelected={chat === selectedChat}
+              >
+                <p>
+                  {!chat.isGroupChat
+                    ? getSender(loggedUser, chat.users)
+                    : chat.chatName}
+                </p>
+              </ChatCard>
+            ))
+          ) : (
+            <Sidebar
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              setSearch={setSearch}
+              search={search}
+              handleSearch={handleSearch}
+              loading={loading}
+              searchResults={searchResults}
+              accessChat={accessChat}
+            />
+          )}
         </Chats>
       </ChatsContainer>
-      <GroupChatModal showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

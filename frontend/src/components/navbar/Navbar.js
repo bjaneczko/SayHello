@@ -1,28 +1,19 @@
-import React, { useState } from "react";
-import { GoPerson } from "react-icons/go";
-import { MdNotifications } from "react-icons/md";
-import { SiAddthis } from "react-icons/si";
-import Sidebar from "../sidebar/Sidebar";
-import { Modal } from "../profilModal/ProfilModal";
-import { ChatState } from "../../context/ChatProvider";
-import axios from "axios";
+import React, { useState } from 'react';
+import { GoPerson } from 'react-icons/go';
+import { MdNotifications } from 'react-icons/md';
+import { ChatState } from '../../context/ChatProvider';
+import { Modal } from '../profilModal/ProfilModal';
 
 import {
   NavbarContainer,
-  NewChatButton,
-  IconContainer,
   InformationContainer,
   InformationModal,
-} from "./Navbar.styled";
-import { useNavigate } from "react-router-dom";
+  LogoContainer,
+} from './Navbar.styled';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [showSidebar, setShowSidebar] = useState(false);
-
-  const openSidebar = () => {
-    setShowSidebar((prev) => !prev);
-  };
 
   const [showModal, setShowModal] = useState(false);
 
@@ -31,79 +22,22 @@ const Navbar = () => {
   };
 
   const logoutHandler = () => {
-    localStorage.removeItem("userInfo");
-    navigate("/");
+    localStorage.removeItem('userInfo');
+    navigate('/');
   };
 
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState();
-
-  const {
-    setSelectedChat,
-    user,
-    notification,
-    setNotification,
-    chats,
-    setChats,
-  } = ChatState();
-
-  const handleSearch = async () => {
-    if (!search) {
-      console.log("Provide name or smth");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-
-      setLoading(false);
-      setSearchResults(data);
-    } catch (error) {
-      console.log("Failed to Load the Search Results");
-    }
-  };
-
-  const accessChat = async (userId) => {
-    try {
-      setLoadingChat(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
-
-      if (!chats?.find((c) => c._id === data._id)) {
-        setChats([data, ...chats]);
-      }
-      setSelectedChat(data);
-      setLoadingChat(false);
-      console.log("Success");
-    } catch (error) {
-      console.log(error.message);
-      console.log("Fail");
-    }
-  };
+  const { user } = ChatState();
 
   return (
     <>
       <NavbarContainer>
-        <NewChatButton onClick={openSidebar}>
-          <IconContainer>
-            <SiAddthis />
-          </IconContainer>
-          New message
-        </NewChatButton>
+        <LogoContainer>
+          <img
+            style={{ width: '50px' }}
+            src="/logo192.png"
+            alt="SayHello logo"
+          />
+        </LogoContainer>
         <InformationContainer>
           <InformationModal>
             <MdNotifications />
@@ -113,16 +47,6 @@ const Navbar = () => {
           </InformationModal>
         </InformationContainer>
       </NavbarContainer>
-      <Sidebar
-        showSidebar={showSidebar}
-        setShowSidebar={setShowSidebar}
-        setSearch={setSearch}
-        search={search}
-        handleSearch={handleSearch}
-        loading={loading}
-        searchResults={searchResults}
-        accessChat={accessChat}
-      />
       <Modal
         showModal={showModal}
         setShowModal={setShowModal}

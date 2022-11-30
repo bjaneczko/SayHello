@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const ChatHeader = styled.div`
   font-size: 24px;
@@ -13,7 +13,7 @@ export const ChatButton = styled.button`
   @media (max-width: 760px) {
     display: flex;
   }
-  display: ${(props) => (props.hideOnMobile ? "none" : "flex")};
+  display: ${(props) => (props.hideOnMobile ? 'none' : 'flex')};
   background-color: #0083b0;
   border-radius: 30px;
   border: none;

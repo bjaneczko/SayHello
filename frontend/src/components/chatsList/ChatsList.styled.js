@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const ChatsContainer = styled.div`
   @media (max-width: 760px) {
-    display: ${(props) => (props.selectedChat ? "none" : "flex")};
+    display: ${(props) => (props.selectedChat ? 'none' : 'flex')};
   }
   max-width: 640px;
   display: flex;
@@ -20,21 +20,27 @@ export const Header = styled.div`
   gap: 30px;
 `;
 
-export const HeaderButton = styled.button`
-  background-color: #0083b0;
-  border-radius: 30px;
-  border: none;
-  font-size: 1rem;
-  color: white;
-  padding: 16px 40px;
+export const Button = styled.button`
+height: 100%;
+display: flex;
+align-items: center;
+gap: 10px;
+background-color: #705df2;
+border: none;
+border-radius: 1rem;
+font-size: 1rem;
+font-weight: 600;
+letter-spacing: 0.04em;
+line-height: 1.5rem;
+color: white;
+padding: 0.7rem 1.5rem;
 
-  &:focus,
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:active {
-    background-color: #007399;
+&:active,
+&:focus,
+&:hover {
+  cursor: pointer;
+  background-color: #4e41a9;
+}
   }
 `;
 
@@ -59,15 +65,13 @@ export const Chats = styled.div`
 export const ChatCard = styled.div`
   margin-top: 1rem;
   border: 1px solid transparent;
-  border-radius: 30px;
+  border-radius: 1rem;
   padding: 0.75rem 1rem;
   display: flex;
   flex-direction: column;
-  background: ${(props) => (props.isSelected ? "#aac3d4" : "#dde7ee")};
+  background: ${(props) => (props.isSelected ? '#aac3d4' : '#dde7ee')};
 
   &:hover {
     cursor: pointer;
   }
 `;
-
-export const ChatUser = styled.p``;
