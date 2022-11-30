@@ -31,7 +31,7 @@ const signinValidationSchema = Yup.object().shape({
     .email("E-mail is not valid!")
     .required("Please enter your email"),
   password: Yup.string()
-    .min(6, "Password has to be longer than 6 characters!")
+    .min(6, "Provide at least 6 characters!")
     .required("Please enter your password"),
 });
 
@@ -78,7 +78,7 @@ const AuthForm = () => {
         }
         onSubmit={(values, actions) => {
           const name = values.name;
-          const email = values.email;
+          const email = values.email.toLowerCase();
           const password = values.password;
           submitHandler(name, email, password);
 
@@ -107,9 +107,7 @@ const AuthForm = () => {
                         error={touched.name && errors.name}
                       />
                     </InputWrapper>
-                    <ErrorContainer>
-                      {errors.name && touched.name && <p>{errors.name}</p>}
-                    </ErrorContainer>
+                    <ErrorContainer>{errors.name}</ErrorContainer>
                   </>
                 )}
                 <InputWrapper>
@@ -125,11 +123,7 @@ const AuthForm = () => {
                     error={touched.email && errors.email}
                   />
                 </InputWrapper>
-                <ErrorContainer>
-                  <ErrorMessage name="email">
-                    {(msg) => <p>{msg}</p>}
-                  </ErrorMessage>
-                </ErrorContainer>
+                <ErrorContainer>{errors.email}</ErrorContainer>
 
                 <InputWrapper>
                   <FormLabel htmlFor="password">Password</FormLabel>
@@ -143,11 +137,7 @@ const AuthForm = () => {
                     error={touched.password && errors.password}
                   />
                 </InputWrapper>
-                <ErrorContainer>
-                  {errors.password && touched.password && (
-                    <p>{errors.password}</p>
-                  )}
-                </ErrorContainer>
+                <ErrorContainer>{errors.password}</ErrorContainer>
 
                 <Submit type="submit" disabled={!isValid || isSubmitting}>
                   {!isNew ? `Login` : `Register`}

@@ -1,12 +1,14 @@
-import React from "react";
-import { Global, css } from "@emotion/react";
-import Routing from "./components/routing/Routing";
-import styled from "@emotion/styled";
+import React from 'react';
+import { Global, css } from '@emotion/react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import ChatPage from './pages/ChatPage';
+import styled from '@emotion/styled';
 
 const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
-  background: linear-gradient(to right, #0083b0, #00b4db);
+  background: #0e141b;
 `;
 
 const App = () => {
@@ -15,15 +17,21 @@ const App = () => {
       <Global
         styles={css`
           body {
-            font-family: "Roboto", sans-serif;
+            font-family: 'Roboto', sans-serif;
             padding: 0;
             margin: 0;
             width: 100vw;
             height: 100vh;
           }
+          ::selection {
+            background: #705df2;
+          }
         `}
       />
-      <Routing />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/chats" element={<ChatPage />} />
+      </Routes>
     </AppContainer>
   );
 };

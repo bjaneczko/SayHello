@@ -7,29 +7,33 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: white;
-  border-radius: 30px;
+  background: #0e1d29;
+  border-radius: 1rem;
+  border: 5px solid #1c2a34;
+  color: white;
 `;
 
 export const InputWrapper = styled.div`
+  width: 300px;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  gap: 10px;
 `;
 
 export const FormLabel = styled.label`
+  font-size: 18px;
+  font-weight: 600;
   margin-left: 1rem;
 `;
 
 export const FormInput = styled(FilteredPropsInputField)`
   background-color: rgb(245, 248, 250);
   border: 1px solid transparent;
-  border-radius: 30px;
+  border-radius: 1rem;
   font-size: 1rem;
   line-height: 1.5rem;
   font-style: normal;
   font-weight: 400;
-  margin-top: 0.5rem;
   padding: 0.75rem 1rem;
 
   &:focus,
@@ -41,13 +45,11 @@ export const FormInput = styled(FilteredPropsInputField)`
   ${({ error }) =>
     error &&
     css`
-      border: 1px solid rgb(191, 49, 12);
+      border: 4px solid rgb(191, 49, 12);
       outline: none;
 
       &:focus,
       &:active {
-        box-shadow: rgb(244, 129, 116) 0px 0px 2px 1px,
-          rgb(251, 178, 174) 0px 0px 0px 3px;
         border: 1px solid rgb(191, 49, 12);
         outline: none;
       }
@@ -55,20 +57,21 @@ export const FormInput = styled(FilteredPropsInputField)`
 `;
 
 export const ErrorContainer = styled.div`
-  height: 10px;
   padding: 0.6rem 1rem 1rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+
   color: rgb(120, 27, 0);
 `;
 
 export const Submit = styled.button`
   width: 100%;
   margin: 1rem 0;
-  background-color: #0083b0;
-  border-radius: 30px;
-  border: none;
-  text-align: center;
+  background-color: #705df2;
+  border-radius: 1rem;
   font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   line-height: 1.5rem;
   color: white;
   padding: 0.7rem 1rem;
@@ -77,6 +80,7 @@ export const Submit = styled.button`
   &:focus,
   &:hover {
     cursor: pointer;
+    background-color: #4e41a9;
   }
 
   &:disabled {
@@ -95,26 +99,10 @@ export const Submit = styled.button`
 export const ToggleButton = styled.button`
   background: none;
   border: none;
-  border-bottom: 4px solid #0083b0;
-
+  border-bottom: 3px solid #705df2;
   font-family: inherit;
   font-size: inherit;
-
-  &:active,
-  &:focus,
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const TestUserButton = styled.button`
-  padding-top: 20px;
-  color: white;
-  background: none;
-  border: none;
-  border-bottom: 2px solid white;
-  font-family: inherit;
-  font-size: inherit;
+  color: #705df2;
 
   &:active,
   &:focus,
