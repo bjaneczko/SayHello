@@ -3,6 +3,7 @@ import { ChatState } from '../../context/ChatProvider';
 import axios from 'axios';
 import { getSender } from '../../config/ChatLogic';
 import { FaArrowLeft, FaEye, FaPen } from 'react-icons/fa';
+import { IoIosSend } from 'react-icons/io';
 import ScrollableChat from '../scrollableChat/ScrollableChat';
 import UpdateGroupChatModal from '../updateGroupChatModal/UpdateGroupChatModal';
 import io from 'socket.io-client';
@@ -15,10 +16,11 @@ import {
   MessagesContainer,
   FormWrapper,
   FormInput,
+  Button,
 } from './SingleChat.styled';
 
 // const ENDPOINT = "https://say-hello-coo0.onrender.com";
-const ENDPOINT = 'https://localhost:5000';
+const ENDPOINT = 'http://localhost:5000';
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -36,6 +38,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
+
+  const messageinput = document.getElementById('messageinput');
+  messageinput?.addEventListener('keypress', function onEvent(event) {
+    if (event.key === 'Enter') {
+      document.getElementById('messagebutton').click();
+    }
+  });
 
   useEffect(() => {
     fetchMessages();
@@ -93,7 +102,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const sendMessage = async (event) => {
-    if (event.key === 'Enter' && newMessage) {
+    if (newMessage) {
       socket.emit('stop typing', selectedChat._id);
       try {
         const config = {
@@ -182,13 +191,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </>
             )}
             {isTyping && <p>Typing...</p>}
-            <FormWrapper onKeyDown={sendMessage}>
+            <FormWrapper>
               <FormInput
                 type="text"
-                placeholder="Chat Name"
+                id="messageinput"
+                placeholder="Write your message.."
                 onChange={typingHandler}
                 value={newMessage}
               />
+              <Button id="messagebutton" onClick={sendMessage}>
+                <IoIosSend />
+              </Button>
             </FormWrapper>
           </MessagesContainer>
         </>

@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-export const SidebarWrapper = styled.div`
+export const SearchWrapper = styled.div`
   height: 100%;
   width: 100%;
   margin-top: 1rem;
 `;
 
-export const SidebarContent = styled.div`
+export const SearchContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,7 +15,7 @@ export const SidebarContent = styled.div`
 
 export const SearchInput = styled.input`
   width: 100%;
-  background-color: #dde7ee;
+  background-color: #bdcfdb;
   border: 1px solid transparent;
   border-radius: 1rem 0 0 1rem;
   font-size: 1rem;
@@ -36,7 +36,7 @@ export const InputContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: #705df2;
+  background-color: #00adb5;
   border-radius: 0 1rem 1rem 0;
   border: none;
   font-size: 1rem;
@@ -48,26 +48,27 @@ export const Button = styled.button`
   &:focus,
   &:hover,
   &:active {
-    background-color: #4e41a9;
+    background-color: #009199;
   }
 `;
 
 export const SearchResultContainer = styled.div`
   width: 100%;
-  background-color: #dde7ee;
-  border: 1px solid transparent;
+  background-color: #bdcfdb;
   border-radius: 1rem;
   padding: 0.75rem 0;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  color: #222831;
 
   &:hover {
-    cursor: pointer;
-    background-color: #0083b0;
+    background-color: #007980;
     color: white;
   }
   &:active {
-    background-color: #007399;
+    background-color: #007980;
+    color: white;
   }
 `;
 

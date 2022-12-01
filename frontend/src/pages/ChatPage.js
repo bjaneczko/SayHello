@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import Navbar from "../components/navbar/Navbar";
-import ChatsList from "../components/chatsList/ChatsList";
-import CurrentChat from "../components/currentChat/CurrentChat";
-import { ChatState } from "../context/ChatProvider";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import Navbar from '../components/navbar/Navbar';
+import ChatsList from '../components/chatsList/ChatsList';
+import CurrentChat from '../components/currentChat/CurrentChat';
+import { ChatState } from '../context/ChatProvider';
 
 const PageContainer = styled.div`
   width: 100vw;

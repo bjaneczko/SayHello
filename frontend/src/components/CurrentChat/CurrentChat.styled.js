@@ -6,8 +6,10 @@ export const CurrentChatContainer = styled.div`
   }
   display: flex;
   flex-direction: column;
-  background: white;
   flex: 1;
-  border-radius: 30px;
+  background: #0e1d29;
+  border-radius: 1rem;
+  border: 5px solid #1c2a34;
   padding: 40px;
+  color: white;
 `;

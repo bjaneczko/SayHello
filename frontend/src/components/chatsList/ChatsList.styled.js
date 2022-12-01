@@ -7,10 +7,12 @@ export const ChatsContainer = styled.div`
   max-width: 640px;
   display: flex;
   flex-direction: column;
-  background: white;
-  border-radius: 30px;
+  background: #0e1d29;
+  border-radius: 1rem;
+  border: 5px solid #1c2a34;
   padding: 40px;
   flex: 1;
+  color: white;
 `;
 
 export const Header = styled.div`
@@ -21,31 +23,28 @@ export const Header = styled.div`
 `;
 
 export const Button = styled.button`
-height: 100%;
-display: flex;
-align-items: center;
-gap: 10px;
-background-color: #705df2;
-border: none;
-border-radius: 1rem;
-font-size: 1rem;
-font-weight: 600;
-letter-spacing: 0.04em;
-line-height: 1.5rem;
-color: white;
-padding: 0.7rem 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #00adb5;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.5rem;
+  color: white;
+  padding: 0.7rem 1.5rem;
 
-&:active,
-&:focus,
-&:hover {
-  cursor: pointer;
-  background-color: #4e41a9;
-}
+  &:hover {
+    cursor: pointer;
+    background-color: #009199;
   }
 `;
 
 export const HeaderText = styled.div`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 `;
 
@@ -69,7 +68,7 @@ export const ChatCard = styled.div`
   padding: 0.75rem 1rem;
   display: flex;
   flex-direction: column;
-  background: ${(props) => (props.isSelected ? '#aac3d4' : '#dde7ee')};
+  background: ${(props) => (props.isSelected ? ' #007980' : '#00494d')};
 
   &:hover {
     cursor: pointer;

@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const ChatContainer = styled.div`
   display: flex;
@@ -12,8 +12,9 @@ export const ChatContainer = styled.div`
 `;
 
 export const Message = styled.div`
-  background: ${(props) => (props.isSender ? "#BEE3F8" : "#B9F5D0")};
-  margin-left: ${(props) => (props.isSender ? "auto" : "0")};
+  background: ${(props) => (props.isSender ? '#e6feff' : '#00adb3')};
+  color: ${(props) => (props.isSender ? '#222831' : 'white')};
+  margin-left: ${(props) => (props.isSender ? 'auto' : '0')};
   border-radius: 20px;
   padding: 5px 15px;
   width: fit-content;

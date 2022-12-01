@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-import FilteredPropsInputField from "../InputField/FilteredPropsInputField";
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import FilteredPropsInputField from '../InputField/FilteredPropsInputField';
 
 export const FormContainer = styled.div`
   padding: 40px 30px;
@@ -67,7 +67,7 @@ export const ErrorContainer = styled.div`
 export const Submit = styled.button`
   width: 100%;
   margin: 1rem 0;
-  background-color: #705df2;
+  background-color: #00adb5;
   border-radius: 1rem;
   font-size: 1rem;
   font-weight: 600;
@@ -75,16 +75,15 @@ export const Submit = styled.button`
   line-height: 1.5rem;
   color: white;
   padding: 0.7rem 1rem;
+  cursor: pointer;
 
   &:active,
   &:focus,
   &:hover {
-    cursor: pointer;
-    background-color: #4e41a9;
+    background-color: #009199;
   }
 
   &:disabled {
-    cursor: pointer;
     background-color: rgb(163, 168, 173);
     box-shadow: none;
     color: rgb(255, 255, 255) !important;
@@ -99,14 +98,16 @@ export const Submit = styled.button`
 export const ToggleButton = styled.button`
   background: none;
   border: none;
-  border-bottom: 3px solid #705df2;
+  border-bottom: 3px solid #00adb5;
   font-family: inherit;
   font-size: inherit;
-  color: #705df2;
+  color: #00adb5;
 
   &:active,
   &:focus,
   &:hover {
+    border-bottom: 3px solid #009199;
+    color: #009199;
     cursor: pointer;
   }
 `;

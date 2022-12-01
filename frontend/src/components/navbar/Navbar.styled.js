@@ -26,7 +26,7 @@ export const InformationContainer = styled.div`
 export const InformationModal = styled.button`
   height: 100%;
   border: none;
-  color: #705df2;
+  color: #00adb5;
   font-size: 2rem;
   padding: 5px 20px 0;
   cursor: pointer;
@@ -35,6 +35,6 @@ export const InformationModal = styled.button`
   &:active,
   &:focus,
   &:hover {
-    color: #4e41a9;
+    color: #00adb5;
   }
 `;

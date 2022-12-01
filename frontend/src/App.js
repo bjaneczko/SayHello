@@ -24,7 +24,7 @@ const App = () => {
             height: 100vh;
           }
           ::selection {
-            background: #705df2;
+            background: #00adb5;
           }
         `}
       />

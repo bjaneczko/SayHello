@@ -1,20 +1,19 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import { useSpring, animated } from 'react-spring';
+import React from 'react';
 
 import {
-  SidebarContent,
-  SidebarWrapper,
+  SearchContent,
+  SearchWrapper,
   InputContainer,
   SearchInput,
   Button,
   SearchResultContainer,
   ResultHeader,
   ResultText,
-} from '../sidebar/Sidebar.styled';
+} from '../search/Search.styled';
 
-const Sidebar = ({
-  showSidebar,
-  setShowSidebar,
+const Search = ({
+  showSearch,
+  setShowSearch,
   search,
   setSearch,
   handleSearch,
@@ -24,9 +23,9 @@ const Sidebar = ({
 }) => {
   return (
     <>
-      {showSidebar ? (
-        <SidebarWrapper showSidebar={showSidebar}>
-          <SidebarContent>
+      {showSearch ? (
+        <SearchWrapper showSearch={showSearch}>
+          <SearchContent>
             <InputContainer>
               <SearchInput
                 value={search}
@@ -46,11 +45,11 @@ const Sidebar = ({
                     <ResultText>{user.email}</ResultText>
                   </SearchResultContainer>
                 ))}
-          </SidebarContent>
-        </SidebarWrapper>
+          </SearchContent>
+        </SearchWrapper>
       ) : null}
     </>
   );
 };
 
-export default Sidebar;
+export default Search;

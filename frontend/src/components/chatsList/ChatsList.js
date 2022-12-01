@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ChatState } from '../../context/ChatProvider';
 import { getSender } from '../../config/ChatLogic';
 import GroupChatModal from '../groupChatModal/GroupChatModal';
-import Sidebar from '../sidebar/Sidebar';
+import Search from '../search/Search';
 
 import {
   ChatsContainer,
@@ -19,13 +19,12 @@ const ChatsList = ({ fetchAgain }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
-
   const [showModal, setShowModal] = useState(false);
 
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
-  const openSidebar = () => {
-    setShowSidebar((prev) => !prev);
+  const openSearch = () => {
+    setShowSearch((prev) => !prev);
   };
 
   const openModal = () => {
@@ -111,13 +110,15 @@ const ChatsList = ({ fetchAgain }) => {
         <Header>
           <HeaderText>Chats</HeaderText>
           <div style={{ display: 'flex', gap: '10px' }}>
-            <Button onClick={openSidebar}>New message</Button>
+            <Button onClick={openSearch}>
+              {showSearch ? 'All chats' : 'New chat'}
+            </Button>
             {/* <Button onClick={openModal}>Group chat</Button> */}
           </div>
         </Header>
         <Chats>
           <GroupChatModal showModal={showModal} setShowModal={setShowModal} />
-          {chats && !showSidebar ? (
+          {chats && !showSearch ? (
             chats.map((chat) => (
               <ChatCard
                 onClick={() => setSelectedChat(chat)}
@@ -132,9 +133,9 @@ const ChatsList = ({ fetchAgain }) => {
               </ChatCard>
             ))
           ) : (
-            <Sidebar
-              showSidebar={showSidebar}
-              setShowSidebar={setShowSidebar}
+            <Search
+              showSearch={showSearch}
+              setShowSearch={setShowSearch}
               setSearch={setSearch}
               search={search}
               handleSearch={handleSearch}
