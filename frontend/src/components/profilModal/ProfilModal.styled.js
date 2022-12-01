@@ -1,31 +1,25 @@
-import styled from "@emotion/styled";
-import { MdClose } from "react-icons/md";
+import styled from '@emotion/styled';
+import { MdClose } from 'react-icons/md';
 
 export const Background = styled.div`
   width: 100%;
   height: 100%;
   position: fixed;
+  top: 65px;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const ModalWrapper = styled.div`
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
+  background: #0e1d29;
+  color: white;
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 10;
-  border-radius: 10px;
-`;
-
-export const ModalImg = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px 0 0 10px;
-  background: #000;
+  border-radius: 1rem;
+  border: 5px solid #1c2a34;
 `;
 
 export const ModalContent = styled.div`
@@ -34,8 +28,7 @@ export const ModalContent = styled.div`
   justify-content: center;
   align-items: center;
   line-height: 1.8;
-  color: #141414;
-  padding: 5rem 6rem;
+  padding: 3rem 5rem;
 `;
 
 export const CloseModalButton = styled(MdClose)`
@@ -49,27 +42,19 @@ export const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-export const UserAvatar = styled.div`
-  width: 100px;
-  height: 100px;
-  background: url("/avatar.png");
-  background-size: cover;
-  border-radius: 100%;
-`;
-
 export const ModalHeader = styled.div`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
 `;
 
 export const ModalText = styled.div`
   font-size: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 2rem;
 `;
 
 export const LogoutButton = styled.button`
-  background-color: #0083b0;
-  border-radius: 30px;
+  background-color: #00adb5;
+  border-radius: 1rem;
   border: none;
   text-align: center;
   font-size: 1rem;
@@ -83,6 +68,6 @@ export const LogoutButton = styled.button`
   }
 
   &:active {
-    background-color: #007399;
+    background-color: #009199;
   }
 `;

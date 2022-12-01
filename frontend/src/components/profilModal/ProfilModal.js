@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useCallback } from "react";
-import { useSpring, animated } from "react-spring";
+import React, { useRef, useEffect, useCallback } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 import {
   Background,
@@ -10,7 +10,7 @@ import {
   ModalText,
   UserAvatar,
   LogoutButton,
-} from "./ProfilModal.styled";
+} from './ProfilModal.styled';
 
 export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
   const modalRef = useRef();
@@ -31,17 +31,17 @@ export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
 
   const keyPress = useCallback(
     (e) => {
-      if (e.key === "Escape" && showModal) {
+      if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log("I pressed");
+        console.log('I pressed');
       }
     },
     [setShowModal, showModal]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", keyPress);
-    return () => document.removeEventListener("keydown", keyPress);
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
   return (
@@ -51,7 +51,6 @@ export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
           <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
               <ModalContent>
-                <UserAvatar />
                 <ModalHeader>{user?.name}</ModalHeader>
                 <ModalText>{user?.email}</ModalText>
                 <LogoutButton onClick={logoutHandler}>Logout</LogoutButton>
