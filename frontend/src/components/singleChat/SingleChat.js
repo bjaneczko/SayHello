@@ -182,7 +182,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </>
             ) : (
               <>
-                <p>{selectedChat.chatName}</p>
+                {selectedChat.chatName}
                 <ChatButton onClick={openModal}>
                   <FaPen />
                 </ChatButton>
@@ -198,7 +198,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <ScrollableChat messages={messages} />
               </>
             )}
-            {isTyping && <p>Typing...</p>}
+            {isTyping && (
+              <p>{getSender(user, selectedChat?.users)} is typing...</p>
+            )}
             <FormWrapper>
               <FormInput
                 type="text"
