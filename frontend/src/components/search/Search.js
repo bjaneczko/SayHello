@@ -9,18 +9,33 @@ import {
   SearchResultContainer,
   ResultHeader,
   ResultText,
+  ResultsWrapper,
+  UserBadge,
 } from '../search/Search.styled';
 
 const Search = ({
   showSearch,
-  setShowSearch,
   search,
   setSearch,
-  handleSearch,
   loading,
   searchResults,
-  accessChat,
+  handleSubmit,
+  selectedUsers,
+  setSelectedUsers,
+  setGroupChatName,
 }) => {
+  const handleGroup = (userToAdd) => {
+    if (selectedUsers.includes(userToAdd)) {
+      console.log(`User already added`);
+      return;
+    }
+    console.log(`user aded`);
+    setSelectedUsers([...selectedUsers, userToAdd]);
+  };
+
+  const handleDelete = (delUser) => {
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
+  };
   return (
     <>
       {showSearch ? (
@@ -32,20 +47,36 @@ const Search = ({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name or email"
               />
-              {/* <Button onClick={handleSearch}>Go</Button> */}
             </InputContainer>
+            {selectedUsers?.length > 1 && (
+              <InputContainer>
+                <SearchInput
+                  type="text"
+                  placeholder="Group chat name"
+                  onChange={(e) => setGroupChatName(e.target.value)}
+                />
+              </InputContainer>
+            )}
+            <ResultsWrapper>
+              {selectedUsers?.map((user) => (
+                <UserBadge key={user._id} onClick={() => handleDelete(user)}>
+                  {user.name} x
+                </UserBadge>
+              ))}
+            </ResultsWrapper>
             {loading
               ? 'Loading...'
               : searchResults?.map((user) => (
                   <SearchResultContainer
                     key={user._id}
-                    onClick={() => accessChat(user._id)}
+                    onClick={() => handleGroup(user)}
                   >
                     <ResultHeader>{user.name}</ResultHeader>
                     <ResultText>{user.email}</ResultText>
                   </SearchResultContainer>
                 ))}
           </SearchContent>
+          <Button onClick={handleSubmit}>Create chat</Button>
         </SearchWrapper>
       ) : null}
     </>

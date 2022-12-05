@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedChat, setChats } from '../../store/chatsSlice';
 import { getSender } from '../../config/ChatLogic';
 import axios from 'axios';
-import GroupChatModal from '../groupChatModal/GroupChatModal';
 import Search from '../search/Search';
 
 import {
@@ -18,7 +17,11 @@ import {
 const ChatsList = ({ fetchAgain }) => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [groupChatName, setGroupChatName] = useState();
+
   const [loading, setLoading] = useState(false);
+
   const [loadingChat, setLoadingChat] = useState();
   const [showModal, setShowModal] = useState(false);
 
@@ -119,6 +122,54 @@ const ChatsList = ({ fetchAgain }) => {
     }
   };
 
+  const handleSubmit = async () => {
+    if (selectedUsers.length < 1) {
+      console.log('Choose at least 1 user!');
+      return;
+    }
+
+    if (selectedUsers.length >= 2 && !groupChatName) {
+      console.log('Please provide chat name');
+      return;
+    }
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      if (selectedUsers.length < 2) {
+        const userId = selectedUsers[0]._id;
+        const { data } = await axios.post(`/api/chat`, { userId }, config);
+
+        if (!chats?.find((c) => c._id === data._id)) {
+          dispatch(setChats([data, ...chats]));
+        }
+        dispatch(setSelectedChat(data));
+        setLoadingChat(false);
+        setShowSearch(false);
+        setSearch('');
+      } else {
+        const { data } = await axios.post(
+          `/api/chat/group`,
+          {
+            name: groupChatName,
+            users: JSON.stringify(selectedUsers.map((u) => u._id)),
+          },
+          config
+        );
+        dispatch(setChats([data, ...chats]));
+        dispatch(setSelectedChat(data));
+        setSearch('');
+        setShowSearch(false);
+        setSelectedUsers();
+      }
+    } catch (error) {
+      console.log(`Failed to Create the Chat!`);
+    }
+  };
+
   return (
     <>
       <ChatsContainer selectedChat={selectedChat}>
@@ -128,11 +179,9 @@ const ChatsList = ({ fetchAgain }) => {
             <Button onClick={openSearch}>
               {showSearch ? 'All chats' : 'New chat'}
             </Button>
-            {/* <Button onClick={openModal}>Group chat</Button> */}
           </div>
         </Header>
         <Chats>
-          <GroupChatModal showModal={showModal} setShowModal={setShowModal} />
           {chats && !showSearch ? (
             chats.map((chat) => (
               <ChatCard
@@ -151,12 +200,16 @@ const ChatsList = ({ fetchAgain }) => {
             <Search
               showSearch={showSearch}
               setShowSearch={setShowSearch}
+              groupChatName={groupChatName}
+              setGroupChatName={setGroupChatName}
               setSearch={setSearch}
               search={search}
+              selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
               handleSearch={handleSearch}
               loading={loading}
               searchResults={searchResults}
-              accessChat={accessChat}
+              handleSubmit={handleSubmit}
             />
           )}
         </Chats>

@@ -24,9 +24,6 @@ export const Header = styled.div`
 
 export const Button = styled.button`
   height: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
   background-color: #00adb5;
   border: none;
   border-radius: 1rem;

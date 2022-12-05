@@ -3,7 +3,10 @@ import styled from '@emotion/styled';
 export const SearchWrapper = styled.div`
   height: 100%;
   width: 100%;
-  margin-top: 1rem;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 export const SearchContent = styled.div`
@@ -64,4 +67,44 @@ export const ResultHeader = styled.div`
 export const ResultText = styled.div`
   padding: 0 1rem;
   font-size: 12px;
+`;
+
+export const ResultsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+`;
+
+export const UserBadge = styled.div`
+  padding: 2px 4px;
+  border-radius: 8px;
+  font-size: 12px;
+  background-color: #bdcfdb;
+  color: black;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff0000;
+  }
+`;
+
+export const Button = styled.button`
+  width: 100%;
+  background-color: #00adb5;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.5rem;
+  color: white;
+  padding: 0.7rem 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #009199;
+  }
 `;
