@@ -17,7 +17,7 @@ export const SearchInput = styled.input`
   width: 100%;
   background-color: #bdcfdb;
   border: 1px solid transparent;
-  border-radius: 1rem 0 0 1rem;
+  border-radius: 1rem;
   font-size: 1rem;
   line-height: 1.5rem;
   font-style: normal;
@@ -33,23 +33,6 @@ export const SearchInput = styled.input`
 
 export const InputContainer = styled.div`
   display: flex;
-`;
-
-export const Button = styled.button`
-  background-color: #00adb5;
-  border-radius: 0 1rem 1rem 0;
-  border: none;
-  font-size: 1rem;
-  color: white;
-  padding: 0.7rem 1.5rem;
-  z-index: 1;
-  cursor: pointer;
-
-  &:focus,
-  &:hover,
-  &:active {
-    background-color: #009199;
-  }
 `;
 
 export const SearchResultContainer = styled.div`

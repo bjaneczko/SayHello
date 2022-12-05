@@ -64,6 +64,40 @@ const ChatsList = ({ fetchAgain }) => {
     }
   }, [fetchAgain, user]);
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (search.length === 0) {
+        return;
+      } else {
+        const handleSearch = async () => {
+          try {
+            setLoading(true);
+
+            const config = {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            };
+
+            const { data } = await axios.get(
+              `/api/user?search=${search}`,
+              config
+            );
+
+            setLoading(false);
+            setSearchResults(data);
+          } catch (error) {
+            console.log('Failed to Load the Search Results');
+          }
+        };
+      }
+      handleSearch();
+    }, 300);
+    return () => {
+      clearTimeout(delay);
+    };
+  }, [search]);
+
   const handleSearch = async () => {
     if (!search) {
       console.log('Provide name or smth');
@@ -103,6 +137,8 @@ const ChatsList = ({ fetchAgain }) => {
       }
       dispatch(setSelectedChat(data));
       setLoadingChat(false);
+      setShowSearch(false);
+      setSearch('');
       console.log('Success');
     } catch (error) {
       console.log(error.message);
