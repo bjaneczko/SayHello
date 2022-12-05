@@ -12,6 +12,7 @@ Password: password
 
 # Built With
 * [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+* [Redux](https://redux.js.org/) - Managing state in app
 * [Node.js](nodejs.org) - JavaScript enviroment
 * [Express](https://expressjs.com/) - Node.js web application framework
 * [MongoDB](https://www.mongodb.com/) - Database for modern apps
