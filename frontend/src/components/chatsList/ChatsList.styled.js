@@ -3,7 +3,12 @@ import styled from '@emotion/styled';
 export const ChatsContainer = styled.div`
   @media (max-width: 760px) {
     display: ${(props) => (props.selectedChat ? 'none' : 'flex')};
+    padding: 20px;
+    border: none;
+    border-radius: 0;
+    height: 100%;
   }
+
   max-width: 640px;
   display: flex;
   flex-direction: column;
@@ -19,7 +24,6 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
 `;
 
 export const Button = styled.button`

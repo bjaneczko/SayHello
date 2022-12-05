@@ -1,15 +1,15 @@
-import styled from "@emotion/styled";
-import { MdClose } from "react-icons/md";
+import styled from '@emotion/styled';
+import { MdClose } from 'react-icons/md';
 
 export const ModalContainer = styled.div`
-  position: absolute;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
-  display: flex;
-  flex-direction: column;
+  max-width: 400px;
+  position: relative;
+  background: #0e1d29;
+  color: white;
   z-index: 10;
   border-radius: 10px;
+  justify-self: start;
+  margin: 0 auto;
 `;
 
 export const ModalContent = styled.div`
@@ -19,7 +19,7 @@ export const ModalContent = styled.div`
   align-items: center;
   line-height: 1.8;
   color: #141414;
-  padding: 5rem 2rem 2rem;
+  padding: 3rem 0 1rem; ;
 `;
 
 export const CloseModalButton = styled(MdClose)`
@@ -65,7 +65,7 @@ export const FormWrapper = styled.div`
 export const FormInput = styled.input`
   background-color: rgb(245, 248, 250);
   border: 1px solid transparent;
-  border-radius: 30px;
+  border-radius: 1rem;
   font-size: 1rem;
   line-height: 1.5rem;
   font-style: normal;
@@ -81,20 +81,17 @@ export const FormInput = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: #0083b0;
-  border-radius: 30px;
+  background-color: #00adb5;
+  border-radius: 1rem;
   border: none;
   color: white;
   padding: 16px 20px;
   cursor: pointer;
 
   &:focus,
-  &:hover {
-    background-color: #007399;
-  }
-
+  &:hover,
   &:active {
-    background-color: #007399;
+    background-color: #009199;
   }
 `;
 

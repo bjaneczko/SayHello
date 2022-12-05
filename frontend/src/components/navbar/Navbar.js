@@ -32,11 +32,7 @@ const Navbar = () => {
     <>
       <NavbarContainer>
         <LogoContainer>
-          <img
-            style={{ width: '50px' }}
-            src="/logo192.png"
-            alt="SayHello logo"
-          />
+          Say<span style={{ backgroundColor: '#00adb5' }}>Hello</span>
         </LogoContainer>
         <InformationContainer>
           <InformationModal>
