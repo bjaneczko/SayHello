@@ -1,11 +1,11 @@
-import React from "react";
-import { ChatState } from "../../context/ChatProvider";
-import { isSameSender, isSameSenderMargin } from "../../config/ChatLogic";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { isSameSenderMargin } from '../../config/ChatLogic';
 
-import { ChatContainer, Message } from "./ScrollableChat.styled";
+import { ChatContainer, Message } from './ScrollableChat.styled';
 
 const ScrollableChat = ({ messages }) => {
-  const { user } = ChatState();
+  const user = useSelector((state) => state.user.user);
 
   return (
     <ChatContainer>

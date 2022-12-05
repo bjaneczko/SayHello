@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Navbar from '../components/navbar/Navbar';
 import ChatsList from '../components/chatsList/ChatsList';
 import CurrentChat from '../components/currentChat/CurrentChat';
-import { ChatState } from '../context/ChatProvider';
 
 const PageContainer = styled.div`
   width: 100vw;
@@ -20,7 +20,8 @@ const ChatsContainer = styled.div`
 `;
 
 const ChatPage = () => {
-  const user = ChatState();
+  const user = useSelector((state) => state.user.user);
+
   const [fetchAgain, setFetchAgain] = useState(false);
 
   return (

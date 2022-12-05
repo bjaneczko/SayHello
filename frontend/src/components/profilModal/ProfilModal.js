@@ -8,7 +8,6 @@ import {
   CloseModalButton,
   ModalHeader,
   ModalText,
-  UserAvatar,
   LogoutButton,
 } from './ProfilModal.styled';
 

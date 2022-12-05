@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ChatState } from '../../context/ChatProvider';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedChat } from '../../store/chatsSlice';
 import { getSender } from '../../config/ChatLogic';
+import axios from 'axios';
 import { FaArrowLeft, FaEye, FaPen } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 import ScrollableChat from '../scrollableChat/ScrollableChat';
@@ -24,7 +25,10 @@ const ENDPOINT = 'http://localhost:5000';
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { user, selectedChat, setSelectedChat } = ChatState();
+  const dispatch = useDispatch();
+
+  const selectedChat = useSelector((state) => state.chats.selectedChat);
+  const user = useSelector((state) => state.user.user);
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,6 +57,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket = io(ENDPOINT);
+    // TODO find a way to solve it without fallbackUser
     const fallbackUser = JSON.parse(localStorage.getItem('userInfo'));
     socket.emit('setup', fallbackUser);
     socket.on('connected', () => setSocketConnected(true));
@@ -161,13 +166,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             fetchMessages={fetchMessages}
           />
           <ChatHeader>
-            <ChatButton hideOnMobile={true} onClick={() => setSelectedChat('')}>
+            <ChatButton
+              hideOnMobile={true}
+              onClick={() => dispatch(setSelectedChat(''))}
+            >
               <FaArrowLeft />
             </ChatButton>
 
             {!selectedChat.isGroupChat ? (
               <>
-                {getSender(user, selectedChat.users)}
+                {getSender(user, selectedChat?.users)}
                 <ChatButton onClick={() => console.log('Modal opened')}>
                   <FaEye />
                 </ChatButton>

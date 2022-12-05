@@ -1,7 +1,8 @@
-import axios from "axios";
-import { ChatState } from "../../context/ChatProvider";
-import React, { useEffect, useCallback, useState } from "react";
-import { useSpring, animated } from "react-spring";
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedChat } from '../../store/chatsSlice';
+import React, { useEffect, useCallback, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 import {
   ModalContainer,
@@ -14,7 +15,7 @@ import {
   FormWrapper,
   SearchResultContainer,
   ResultHeader,
-} from "./UpdateGroupChatModal.styled";
+} from './UpdateGroupChatModal.styled';
 
 const UpdateGroupChatModal = ({
   fetchMessages,
@@ -23,12 +24,16 @@ const UpdateGroupChatModal = ({
   showModal,
   setShowModal,
 }) => {
+  const dispatch = useDispatch();
+
   const [groupChatName, setGroupChatName] = useState();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameloading, setRenameLoading] = useState(false);
-  const { selectedChat, setSelectedChat, user } = ChatState();
+
+  const selectedChat = useSelector((state) => state.chats.selectedChat);
+  const user = useSelector((state) => state.user.user);
 
   const handleSearch = async (query) => {
     setSearch(query);
@@ -47,7 +52,7 @@ const UpdateGroupChatModal = ({
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
-      console.log("Failed to Load the Search Results");
+      console.log('Failed to Load the Search Results');
 
       setLoading(false);
     }
@@ -72,24 +77,24 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      setSelectedChat(data);
+      dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       setRenameLoading(false);
     } catch (error) {
       console.log(error.response.data.message);
       setRenameLoading(false);
     }
-    setGroupChatName("");
+    setGroupChatName('');
   };
 
   const handleAddUser = async (user1) => {
     if (selectedChat.users.find((u) => u._id === user1._id)) {
-      console.log("User Already in group!");
+      console.log('User Already in group!');
       return;
     }
 
     if (selectedChat.groupAdmin._id !== user._id) {
-      console.log("Only admins can add someone!");
+      console.log('Only admins can add someone!');
       return;
     }
 
@@ -109,19 +114,19 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      setSelectedChat(data);
+      dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       setLoading(false);
     } catch (error) {
       console.log(error.response.data.message);
       setLoading(false);
     }
-    setGroupChatName("");
+    setGroupChatName('');
   };
 
   const handleRemove = async (user1) => {
     if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
-      console.log("Only admins can remove someone!");
+      console.log('Only admins can remove someone!');
       return;
     }
 
@@ -146,7 +151,9 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+      user1._id === user._id
+        ? dispatch(setSelectedChat())
+        : dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       fetchMessages();
       setLoading(false);
@@ -154,7 +161,7 @@ const UpdateGroupChatModal = ({
       console.log(error.response.data.message);
       setLoading(false);
     }
-    setGroupChatName("");
+    setGroupChatName('');
   };
 
   const animation = useSpring({
@@ -166,17 +173,17 @@ const UpdateGroupChatModal = ({
 
   const keyPress = useCallback(
     (e) => {
-      if (e.key === "Escape" && showModal) {
+      if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log("I pressed");
+        console.log('I pressed');
       }
     },
     [setShowModal, showModal]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", keyPress);
-    return () => document.removeEventListener("keydown", keyPress);
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
   return (
