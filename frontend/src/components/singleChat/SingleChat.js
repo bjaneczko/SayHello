@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ChatState } from '../../context/ChatProvider';
-import axios from 'axios';
 import { getSender } from '../../config/ChatLogic';
+import axios from 'axios';
 import { FaArrowLeft, FaEye, FaPen } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 import ScrollableChat from '../scrollableChat/ScrollableChat';
@@ -24,7 +25,8 @@ const ENDPOINT = 'http://localhost:5000';
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { user, selectedChat, setSelectedChat } = ChatState();
+  const { selectedChat, setSelectedChat } = ChatState();
+  const user = useSelector((state) => state.user.user);
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket = io(ENDPOINT);
+    // TODO find a way to solve it without fallbackUser
     const fallbackUser = JSON.parse(localStorage.getItem('userInfo'));
     socket.emit('setup', fallbackUser);
     socket.on('connected', () => setSocketConnected(true));

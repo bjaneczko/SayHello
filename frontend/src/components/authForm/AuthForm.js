@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Formik, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Formik, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import {
   FormContainer,
@@ -12,27 +12,27 @@ import {
   InputWrapper,
   ErrorContainer,
   ToggleButton,
-} from "./AuthForm.styled";
+} from './AuthForm.styled';
 
 const signupValidationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(2, "Your name is too short")
-    .required("Please enter your name"),
+    .min(2, 'Your name is too short')
+    .required('Please enter your name'),
   email: Yup.string()
-    .email("E-mail is not valid!")
-    .required("Please enter your email"),
+    .email('E-mail is not valid!')
+    .required('Please enter your email'),
   password: Yup.string()
-    .min(6, "Password has to be longer than 6 characters!")
-    .required("Please enter your password"),
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Please enter your password'),
 });
 
 const signinValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email("E-mail is not valid!")
-    .required("Please enter your email"),
+    .email('E-mail is not valid!')
+    .required('Please enter your email'),
   password: Yup.string()
-    .min(6, "Provide at least 6 characters!")
-    .required("Please enter your password"),
+    .min(6, 'Provide at least 6 characters!')
+    .required('Please enter your password'),
 });
 
 const AuthForm = () => {
@@ -42,16 +42,16 @@ const AuthForm = () => {
   const submitHandler = async (name, email, password) => {
     let data;
     await axios
-      .post(`/api/user/${isNew ? "" : "login"}`, {
+      .post(`/api/user/${isNew ? '' : 'login'}`, {
         name: name,
         email: email,
         password: password,
       })
       .then(function (response) {
         data = response.data;
-        localStorage.setItem("userInfo", JSON.stringify(data));
+        localStorage.setItem('userInfo', JSON.stringify(data));
         if (!isNew) {
-          navigate("/chats");
+          navigate('/chats');
         } else {
           setIsNew(false);
         }
@@ -69,9 +69,9 @@ const AuthForm = () => {
     <FormContainer>
       <Formik
         initialValues={{
-          name: "",
-          email: "",
-          password: "",
+          name: '',
+          email: '',
+          password: '',
         }}
         validationSchema={
           isNew ? signupValidationSchema : signinValidationSchema

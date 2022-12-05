@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { GoPerson } from 'react-icons/go';
 import { MdNotifications } from 'react-icons/md';
 import { ChatState } from '../../context/ChatProvider';
@@ -26,7 +27,7 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const { user } = ChatState();
+  const user = useSelector((state) => state.user.user);
 
   return (
     <>

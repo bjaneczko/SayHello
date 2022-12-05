@@ -1,7 +1,8 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { ChatState } from '../../context/ChatProvider';
 import { getSender } from '../../config/ChatLogic';
+import axios from 'axios';
 import GroupChatModal from '../groupChatModal/GroupChatModal';
 import Search from '../search/Search';
 
@@ -30,8 +31,9 @@ const ChatsList = ({ fetchAgain }) => {
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
+  const user = useSelector((state) => state.user.user);
 
-  const { selectedChat, setSelectedChat, chats, setChats, user } = ChatState();
+  const { selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
 
   const fetchChats = async () => {

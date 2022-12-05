@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
-import { useSpring, animated } from "react-spring";
-import { ChatState } from "../../context/ChatProvider";
-import axios from "axios";
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import { useSpring, animated } from 'react-spring';
+import { ChatState } from '../../context/ChatProvider';
+import axios from 'axios';
 
 import {
   Background,
@@ -15,16 +16,17 @@ import {
   ResultHeader,
   ResultsWrapper,
   UserBadge,
-} from "./GroupChatModal.styled";
+} from './GroupChatModal.styled';
 
 const GroupChatModal = ({ showModal, setShowModal }) => {
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user.user);
 
-  const { user, chats, setChats } = ChatState();
+  const { chats, setChats } = ChatState();
 
   const handleSearch = async (query) => {
     setSearch(query);
@@ -50,7 +52,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
 
   const handleSubmit = async () => {
     if (!groupChatName || !selectedUsers) {
-      console.log("Please fill all the feilds");
+      console.log('Please fill all the feilds');
       return;
     }
 
@@ -60,7 +62,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      console.log(selectedUsers);
+
       const { data } = await axios.post(
         `/api/chat/group`,
         {
@@ -70,7 +72,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
         config
       );
       setChats([data, ...chats]);
-      // setSelectedUsers([]);
+
       setShowModal((prev) => !prev);
     } catch (error) {
       console.log(`Failed to Create the Chat!`);
@@ -108,17 +110,17 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
 
   const keyPress = useCallback(
     (e) => {
-      if (e.key === "Escape" && showModal) {
+      if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log("I pressed");
+        console.log('I pressed');
       }
     },
     [setShowModal, showModal]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", keyPress);
-    return () => document.removeEventListener("keydown", keyPress);
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
   return (

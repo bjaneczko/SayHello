@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AuthForm from '../components/authForm/AuthForm';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
 
 const HomePage = styled.div`
@@ -14,16 +13,6 @@ const HomePage = styled.div`
 `;
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('userInfo'));
-
-    if (user) {
-      navigate('/');
-    }
-  }, [navigate]);
-
   return (
     <HomePage>
       <TypeAnimation

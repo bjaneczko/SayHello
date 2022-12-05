@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Global, css } from '@emotion/react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from './store/userSlice';
 import Home from './pages/Home';
 import ChatPage from './pages/ChatPage';
 import styled from '@emotion/styled';
@@ -12,6 +14,18 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    dispatch(setUser(userInfo));
+
+    if (!userInfo) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   return (
     <AppContainer>
       <Global
