@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { ChatState } from '../../context/ChatProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedChat } from '../../store/chatsSlice';
 import { getSender } from '../../config/ChatLogic';
 import axios from 'axios';
 import { FaArrowLeft, FaEye, FaPen } from 'react-icons/fa';
@@ -25,7 +25,9 @@ const ENDPOINT = 'http://localhost:5000';
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { selectedChat, setSelectedChat } = ChatState();
+  const dispatch = useDispatch();
+
+  const selectedChat = useSelector((state) => state.chats.selectedChat);
   const user = useSelector((state) => state.user.user);
 
   const [messages, setMessages] = useState([]);
@@ -164,13 +166,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             fetchMessages={fetchMessages}
           />
           <ChatHeader>
-            <ChatButton hideOnMobile={true} onClick={() => setSelectedChat('')}>
+            <ChatButton
+              hideOnMobile={true}
+              onClick={() => dispatch(setSelectedChat(''))}
+            >
               <FaArrowLeft />
             </ChatButton>
 
             {!selectedChat.isGroupChat ? (
               <>
-                {getSender(user, selectedChat.users)}
+                {getSender(user, selectedChat?.users)}
                 <ChatButton onClick={() => console.log('Modal opened')}>
                   <FaEye />
                 </ChatButton>

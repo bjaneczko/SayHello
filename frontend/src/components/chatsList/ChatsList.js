@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { ChatState } from '../../context/ChatProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedChat, setChats } from '../../store/chatsSlice';
 import { getSender } from '../../config/ChatLogic';
 import axios from 'axios';
 import GroupChatModal from '../groupChatModal/GroupChatModal';
@@ -24,6 +24,8 @@ const ChatsList = ({ fetchAgain }) => {
 
   const [showSearch, setShowSearch] = useState(false);
 
+  const dispatch = useDispatch();
+
   const openSearch = () => {
     setShowSearch((prev) => !prev);
   };
@@ -31,9 +33,10 @@ const ChatsList = ({ fetchAgain }) => {
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
-  const user = useSelector((state) => state.user.user);
 
-  const { selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const user = useSelector((state) => state.user.user);
+  const selectedChat = useSelector((state) => state.chats.selectedChat);
+  const chats = useSelector((state) => state.chats.chats);
   const [loggedUser, setLoggedUser] = useState();
 
   const fetchChats = async () => {
@@ -46,7 +49,8 @@ const ChatsList = ({ fetchAgain }) => {
       let data;
       await axios.get('/api/chat', config).then(function (response) {
         data = response.data;
-        setChats(data);
+        console.log(chats);
+        dispatch(setChats(data));
       });
     } catch (error) {
       console.log(error.message);
@@ -55,7 +59,7 @@ const ChatsList = ({ fetchAgain }) => {
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
-    if (user?.token) {
+    if (user.token) {
       fetchChats();
     }
   }, [fetchAgain, user]);
@@ -95,9 +99,9 @@ const ChatsList = ({ fetchAgain }) => {
       const { data } = await axios.post(`/api/chat`, { userId }, config);
 
       if (!chats?.find((c) => c._id === data._id)) {
-        setChats([data, ...chats]);
+        dispatch(setChats([data, ...chats]));
       }
-      setSelectedChat(data);
+      dispatch(setSelectedChat(data));
       setLoadingChat(false);
       console.log('Success');
     } catch (error) {
@@ -123,7 +127,7 @@ const ChatsList = ({ fetchAgain }) => {
           {chats && !showSearch ? (
             chats.map((chat) => (
               <ChatCard
-                onClick={() => setSelectedChat(chat)}
+                onClick={() => dispatch(setSelectedChat(chat))}
                 key={chat._id}
                 isSelected={chat === selectedChat}
               >

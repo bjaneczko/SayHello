@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { ChatState } from '../../context/ChatProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedChat } from '../../store/chatsSlice';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 
@@ -24,12 +24,15 @@ const UpdateGroupChatModal = ({
   showModal,
   setShowModal,
 }) => {
+  const dispatch = useDispatch();
+
   const [groupChatName, setGroupChatName] = useState();
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameloading, setRenameLoading] = useState(false);
-  const { selectedChat, setSelectedChat } = ChatState();
+
+  const selectedChat = useSelector((state) => state.chats.selectedChat);
   const user = useSelector((state) => state.user.user);
 
   const handleSearch = async (query) => {
@@ -74,7 +77,7 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      setSelectedChat(data);
+      dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       setRenameLoading(false);
     } catch (error) {
@@ -111,7 +114,7 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      setSelectedChat(data);
+      dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       setLoading(false);
     } catch (error) {
@@ -148,7 +151,9 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+      user1._id === user._id
+        ? dispatch(setSelectedChat())
+        : dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       fetchMessages();
       setLoading(false);

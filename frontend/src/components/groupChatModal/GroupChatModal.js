@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setChats } from '../../store/chatsSlice';
 import { useSpring, animated } from 'react-spring';
-import { ChatState } from '../../context/ChatProvider';
 import axios from 'axios';
 
 import {
@@ -19,6 +19,7 @@ import {
 } from './GroupChatModal.styled';
 
 const GroupChatModal = ({ showModal, setShowModal }) => {
+  const dispatch = useDispatch();
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState('');
@@ -26,7 +27,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user.user);
 
-  const { chats, setChats } = ChatState();
+  const chats = useSelector((state) => state.chats.chats);
 
   const handleSearch = async (query) => {
     setSearch(query);
@@ -71,7 +72,7 @@ const GroupChatModal = ({ showModal, setShowModal }) => {
         },
         config
       );
-      setChats([data, ...chats]);
+      dispatch(setChats([data, ...chats]));
 
       setShowModal((prev) => !prev);
     } catch (error) {

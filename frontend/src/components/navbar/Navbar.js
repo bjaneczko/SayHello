@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GoPerson } from 'react-icons/go';
 import { MdNotifications } from 'react-icons/md';
-import { ChatState } from '../../context/ChatProvider';
 import { Modal } from '../profilModal/ProfilModal';
 
 import {
