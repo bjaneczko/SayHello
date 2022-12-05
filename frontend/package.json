@@ -19,6 +19,7 @@
     "react-scripts": "5.0.1",
     "react-spring": "^9.5.5",
     "react-type-animation": "^2.1.2",
+    "scrollable-component": "^1.2.1",
     "socket.io-client": "^4.5.3",
     "styled-reset": "^4.4.2",
     "web-vitals": "^2.1.4",

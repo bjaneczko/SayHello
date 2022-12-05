@@ -3,6 +3,10 @@ import styled from '@emotion/styled';
 export const CurrentChatContainer = styled.div`
   @media (max-width: 760px) {
     display: ${(props) => (props.selectedChat ? 'flex' : 'none')};
+    padding: 20px;
+    border: none;
+    border-radius: 0;
+    height: 100%;
   }
   display: flex;
   flex-direction: column;

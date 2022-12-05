@@ -10,10 +10,14 @@ const PageContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const ChatsContainer = styled.div`
-  height: calc(100% - 100px);
+  @media (max-width: 760px) {
+    padding: 0;
+  }
+  height: calc(100% - 110px);
   display: flex;
   gap: 20px;
   padding: 20px;

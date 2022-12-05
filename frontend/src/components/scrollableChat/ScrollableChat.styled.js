@@ -17,5 +17,6 @@ export const Message = styled.div`
   margin-left: ${(props) => (props.isSender ? 'auto' : '0')};
   border-radius: 20px;
   padding: 5px 15px;
-  width: fit-content;
+  max-width: max-content;
+  overflow-wrap: anywhere;
 `;

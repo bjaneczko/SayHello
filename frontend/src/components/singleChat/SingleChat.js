@@ -158,13 +158,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     <>
       {selectedChat ? (
         <>
-          <UpdateGroupChatModal
-            showModal={showModal}
-            setShowModal={setShowModal}
-            fetchAgain={fetchAgain}
-            setFetchAgain={setFetchAgain}
-            fetchMessages={fetchMessages}
-          />
           <ChatHeader>
             <ChatButton
               hideOnMobile={true}
@@ -189,31 +182,41 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </>
             )}
           </ChatHeader>
-
-          <MessagesContainer>
-            {loading ? (
-              <p>Loading</p>
-            ) : (
-              <>
-                <ScrollableChat messages={messages} />
-              </>
-            )}
-            {isTyping && (
-              <p>{getSender(user, selectedChat?.users)} is typing...</p>
-            )}
-            <FormWrapper>
-              <FormInput
-                type="text"
-                id="messageinput"
-                placeholder="Write your message.."
-                onChange={typingHandler}
-                value={newMessage}
-              />
-              <Button id="messagebutton" onClick={sendMessage}>
-                <IoIosSend />
-              </Button>
-            </FormWrapper>
-          </MessagesContainer>
+          {showModal ? (
+            <UpdateGroupChatModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              fetchAgain={fetchAgain}
+              setFetchAgain={setFetchAgain}
+              fetchMessages={fetchMessages}
+            />
+          ) : (
+            <MessagesContainer>
+              {loading ? (
+                <p>Loading</p>
+              ) : (
+                <>
+                  <ScrollableChat messages={messages} />
+                </>
+              )}
+              {isTyping && (
+                <p>{getSender(user, selectedChat?.users)} is typing...</p>
+              )}
+              <FormWrapper>
+                <FormInput
+                  type="text"
+                  id="messageinput"
+                  placeholder="Write your message.."
+                  autoComplete="off"
+                  onChange={typingHandler}
+                  value={newMessage}
+                />
+                <Button id="messagebutton" onClick={sendMessage}>
+                  <IoIosSend />
+                </Button>
+              </FormWrapper>
+            </MessagesContainer>
+          )}
         </>
       ) : (
         <InfomationContainer>
