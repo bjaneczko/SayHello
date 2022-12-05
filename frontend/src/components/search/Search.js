@@ -32,7 +32,7 @@ const Search = ({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name or email"
               />
-              <Button onClick={handleSearch}>Go</Button>
+              {/* <Button onClick={handleSearch}>Go</Button> */}
             </InputContainer>
             {loading
               ? 'Loading...'

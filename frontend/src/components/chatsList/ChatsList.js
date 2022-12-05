@@ -64,12 +64,19 @@ const ChatsList = ({ fetchAgain }) => {
     }
   }, [fetchAgain, user]);
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      handleSearch();
+    }, 300);
+    return () => {
+      clearTimeout(delay);
+    };
+  }, [search]);
+
   const handleSearch = async () => {
-    if (!search) {
-      console.log('Provide name or smth');
+    if (search.length === 0) {
       return;
     }
-
     try {
       setLoading(true);
 
@@ -103,6 +110,8 @@ const ChatsList = ({ fetchAgain }) => {
       }
       dispatch(setSelectedChat(data));
       setLoadingChat(false);
+      setShowSearch(false);
+      setSearch('');
       console.log('Success');
     } catch (error) {
       console.log(error.message);
