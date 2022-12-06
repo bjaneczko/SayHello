@@ -17,13 +17,17 @@ import {
 const signupValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Your name is too short')
-    .required('Please enter your name'),
+    .required('Please enter your name')
+    .max(30, 'Your name is too long'),
   email: Yup.string()
     .email('E-mail is not valid!')
-    .required('Please enter your email'),
+    .required('Please enter your email')
+    .max(50, 'Your email is too long'),
+
   password: Yup.string()
-    .min(6, 'Password has to be longer than 6 characters!')
-    .required('Please enter your password'),
+    .min(6, 'Provide at least 6 characters!')
+    .required('Please enter your password')
+    .max(50, 'Your password is too long'),
 });
 
 const signinValidationSchema = Yup.object().shape({
