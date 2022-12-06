@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
+import { toast } from 'react-toastify';
+
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -61,7 +63,16 @@ const AuthForm = () => {
         }
       })
       .catch(function (error) {
-        alert(error.response.data.message);
+        toast.error(error.response.data.message, {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       });
   };
 

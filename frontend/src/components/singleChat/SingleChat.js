@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedChat } from '../../store/chatsSlice';
-import { getSender } from '../../config/ChatLogic';
+import { toast } from 'react-toastify';
+import io from 'socket.io-client';
 import axios from 'axios';
-import { FaArrowLeft, FaEye, FaPen } from 'react-icons/fa';
+import { FaArrowLeft, FaPen } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 import ScrollableChat from '../scrollableChat/ScrollableChat';
 import UpdateGroupChatModal from '../updateGroupChatModal/UpdateGroupChatModal';
-import io from 'socket.io-client';
+import { getSender } from '../../config/ChatLogic';
 
 import {
   ChatHeader,
@@ -20,8 +21,8 @@ import {
   Button,
 } from './SingleChat.styled';
 
-const ENDPOINT = 'https://say-hello-coo0.onrender.com';
-// const ENDPOINT = 'http://localhost:5000';
+// const ENDPOINT = 'https://say-hello-coo0.onrender.com';
+const ENDPOINT = 'http://localhost:5000';
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -57,9 +58,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    // TODO find a way to solve it without fallbackUser
-    const fallbackUser = JSON.parse(localStorage.getItem('userInfo'));
-    socket.emit('setup', fallbackUser);
+    socket.emit('setup', user);
     socket.on('connected', () => setSocketConnected(true));
     socket.on(`typing`, () => setIsTyping(true));
     socket.on(`stop typing`, () => setIsTyping(false));
@@ -96,7 +95,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(false);
       socket.emit('join chat', selectedChat._id);
     } catch (error) {
-      console.log(`Failed to Load the Messages`);
+      toast.error(`Failed to load the messages, please refresh page`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
   };
 
@@ -122,7 +130,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         socket.emit('new message', data);
         setMessages([...messages, data]);
       } catch (error) {
-        console.log('Failed to send the Message');
+        toast.error('Failed to send the Message', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       }
     }
   };

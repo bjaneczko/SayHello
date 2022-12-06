@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedChat } from '../../store/chatsSlice';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { toast } from 'react-toastify';
 
 import {
   ModalContainer,
@@ -51,7 +52,16 @@ const UpdateGroupChatModal = ({
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
-      console.log('Failed to Load the Search Results');
+      toast.error('Failed to load search results', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
 
       setLoading(false);
     }
@@ -78,19 +88,46 @@ const UpdateGroupChatModal = ({
       dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
     setGroupChatName('');
   };
 
   const handleAddUser = async (user1) => {
     if (selectedChat.users.find((u) => u._id === user1._id)) {
-      console.log('User Already in group!');
+      toast.warn('User already added', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
 
     if (selectedChat.groupAdmin._id !== user._id) {
-      console.log('Only admins can add someone!');
+      toast.error('Only admin can add someone!', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
 
@@ -114,7 +151,16 @@ const UpdateGroupChatModal = ({
       setFetchAgain(!fetchAgain);
       setLoading(false);
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       setLoading(false);
     }
     setGroupChatName('');
@@ -122,12 +168,30 @@ const UpdateGroupChatModal = ({
 
   const handleRemove = async (user1) => {
     if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
-      console.log('Only admins can remove someone!');
+      toast.error('Only admin can remove someone!', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
 
     if (selectedChat.groupAdmin._id === user._id && user1._id === user._id) {
-      console.log(`You are an admin, cant leave group!`);
+      toast.error('You are an admin, can`t leave a group', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       return;
     }
 
@@ -154,24 +218,25 @@ const UpdateGroupChatModal = ({
       fetchMessages();
       setLoading(false);
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       setLoading(false);
     }
     setGroupChatName('');
   };
 
-  const animation = useSpring({
-    config: {
-      duration: 250,
-    },
-    opacity: showModal ? 1 : 0,
-  });
-
   const keyPress = useCallback(
     (e) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log('I pressed');
       }
     },
     [setShowModal, showModal]
@@ -187,53 +252,51 @@ const UpdateGroupChatModal = ({
   return (
     <>
       {showModal ? (
-        <animated.div style={animation}>
-          <ModalContainer showModal={showModal}>
-            <ModalContent>
-              <ResultsWrapper>
-                {selectedChat.users.map((u) => (
-                  <UserBadge key={u._id} onClick={() => handleRemove(u)}>
-                    {u.name} x
-                  </UserBadge>
-                ))}
-              </ResultsWrapper>
-              <FormWrapper>
-                <FormInput
-                  type="text"
-                  placeholder="Chat Name"
-                  onChange={(e) => setGroupChatName(e.target.value)}
-                />
-                <Button onClick={handleRename}>Update</Button>
-              </FormWrapper>
-              <FormWrapper>
-                <FormInput
-                  type="text"
-                  placeholder="Search for users"
-                  onChange={(e) => handleSearch(e.target.value)}
-                />
-              </FormWrapper>
-              <ResultsWrapper>
-                {loading ? (
-                  <div>Loading</div>
-                ) : (
-                  searchResult?.slice(0, 4).map((user) => (
-                    <SearchResultContainer
-                      key={user._id}
-                      onClick={() => handleAddUser(user)}
-                    >
-                      <ResultHeader>{user.name}</ResultHeader>
-                    </SearchResultContainer>
-                  ))
-                )}
-              </ResultsWrapper>
-              <Button onClick={() => handleRemove(user)}>Leave group</Button>
-            </ModalContent>
-            <CloseModalButton
-              aria-label="Close modal"
-              onClick={() => setShowModal((prev) => !prev)}
-            />
-          </ModalContainer>
-        </animated.div>
+        <ModalContainer showModal={showModal}>
+          <ModalContent>
+            <ResultsWrapper>
+              {selectedChat.users.map((u) => (
+                <UserBadge key={u._id} onClick={() => handleRemove(u)}>
+                  {u.name} x
+                </UserBadge>
+              ))}
+            </ResultsWrapper>
+            <FormWrapper>
+              <FormInput
+                type="text"
+                placeholder="Chat Name"
+                onChange={(e) => setGroupChatName(e.target.value)}
+              />
+              <Button onClick={handleRename}>Update</Button>
+            </FormWrapper>
+            <FormWrapper>
+              <FormInput
+                type="text"
+                placeholder="Search for users"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </FormWrapper>
+            <ResultsWrapper>
+              {loading ? (
+                <div>Loading</div>
+              ) : (
+                searchResult?.slice(0, 4).map((user) => (
+                  <SearchResultContainer
+                    key={user._id}
+                    onClick={() => handleAddUser(user)}
+                  >
+                    <ResultHeader>{user.name}</ResultHeader>
+                  </SearchResultContainer>
+                ))
+              )}
+            </ResultsWrapper>
+            <Button onClick={() => handleRemove(user)}>Leave group</Button>
+          </ModalContent>
+          <CloseModalButton
+            aria-label="Close modal"
+            onClick={() => setShowModal((prev) => !prev)}
+          />
+        </ModalContainer>
       ) : null}
     </>
   );
