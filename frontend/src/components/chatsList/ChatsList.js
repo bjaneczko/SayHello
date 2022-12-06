@@ -52,7 +52,6 @@ const ChatsList = ({ fetchAgain }) => {
       let data;
       await axios.get('/api/chat', config).then(function (response) {
         data = response.data;
-        console.log(chats);
         dispatch(setChats(data));
       });
     } catch (error) {
@@ -98,30 +97,6 @@ const ChatsList = ({ fetchAgain }) => {
     }
   };
 
-  const accessChat = async (userId) => {
-    try {
-      setLoadingChat(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
-
-      if (!chats?.find((c) => c._id === data._id)) {
-        dispatch(setChats([data, ...chats]));
-      }
-      dispatch(setSelectedChat(data));
-      setLoadingChat(false);
-      setShowSearch(false);
-      setSearch('');
-      console.log('Success');
-    } catch (error) {
-      console.log(error.message);
-      console.log('Fail');
-    }
-  };
-
   const handleSubmit = async () => {
     if (selectedUsers.length < 1) {
       console.log('Choose at least 1 user!');
@@ -150,6 +125,7 @@ const ChatsList = ({ fetchAgain }) => {
         setLoadingChat(false);
         setShowSearch(false);
         setSearch('');
+        setSelectedUsers([]);
       } else {
         const { data } = await axios.post(
           `/api/chat/group`,
@@ -163,7 +139,7 @@ const ChatsList = ({ fetchAgain }) => {
         dispatch(setSelectedChat(data));
         setSearch('');
         setShowSearch(false);
-        setSelectedUsers();
+        setSelectedUsers([]);
       }
     } catch (error) {
       console.log(`Failed to Create the Chat!`);

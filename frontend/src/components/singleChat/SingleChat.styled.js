@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const ChatHeader = styled.div`
   font-size: 24px;
-  padding-bottom: 20px;
+  padding-bottom: 1rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -15,10 +15,10 @@ export const ChatButton = styled.button`
   }
   display: ${(props) => (props.hideOnMobile ? 'none' : 'flex')};
   background-color: #00adb5;
-  border-radius: 30px;
+  border-radius: 1rem;
   border: none;
   color: white;
-  padding: 16px 20px;
+  padding: 16px 24px;
   cursor: pointer;
 
   &:focus,
