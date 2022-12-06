@@ -167,12 +167,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             </ChatButton>
 
             {!selectedChat.isGroupChat ? (
-              <>
-                {getSender(user, selectedChat?.users)}
-                <ChatButton onClick={() => console.log('Modal opened')}>
-                  <FaEye />
-                </ChatButton>
-              </>
+              <>{getSender(user, selectedChat?.users)}</>
             ) : (
               <>
                 {selectedChat.chatName}

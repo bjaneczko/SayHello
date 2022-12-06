@@ -24,6 +24,7 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 1rem;
 `;
 
 export const Button = styled.button`
@@ -52,6 +53,7 @@ export const HeaderText = styled.div`
 export const Chats = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -63,7 +65,6 @@ export const Chats = styled.div`
 `;
 
 export const ChatCard = styled.div`
-  margin-top: 1rem;
   border: 1px solid transparent;
   border-radius: 1rem;
   padding: 0.75rem 1rem;
