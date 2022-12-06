@@ -21,9 +21,8 @@ const App = () => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     dispatch(setUser(userInfo));
 
-    if (!userInfo) {
-      navigate('/');
-    }
+    if (!userInfo) navigate('/');
+    if (userInfo) navigate('/chats');
   }, [navigate]);
 
   return (
