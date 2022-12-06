@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
-// import ChatProvider from './context/ChatProvider';
 import store from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      {/* <ChatProvider> */}
       <App />
-      {/* </ChatProvider> */}
     </Provider>
   </BrowserRouter>
 );

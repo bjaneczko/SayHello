@@ -68,14 +68,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     socket.on('message recieved', (newMessageRecieved) => {
       if (
-        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-        // if (!notification.includes(newMessageRecieved)) {
-        //   setNotification([newMessageRecieved, ...notification]);
-        //   setFetchAgain(!fetchAgain);
-        // }
-        // console.log(user);
+        //TODO add notifications
       } else {
         setMessages([...messages, newMessageRecieved]);
       }
@@ -84,14 +80,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
-
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       };
-
       setLoading(true);
 
       const { data } = await axios.get(
@@ -144,6 +138,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
     let lastTypingTime = new Date().getTime();
     let timerLength = 3000;
+
     setTimeout(() => {
       let timeNow = new Date().getTime();
       let timeDiff = timeNow - lastTypingTime;

@@ -15,32 +15,22 @@ import {
 } from './ChatsList.styled';
 
 const ChatsList = ({ fetchAgain }) => {
+  const dispatch = useDispatch();
+
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [groupChatName, setGroupChatName] = useState();
-
   const [loading, setLoading] = useState(false);
-
-  const [loadingChat, setLoadingChat] = useState();
-  const [showModal, setShowModal] = useState(false);
-
   const [showSearch, setShowSearch] = useState(false);
-
-  const dispatch = useDispatch();
 
   const openSearch = () => {
     setShowSearch((prev) => !prev);
   };
 
-  const openModal = () => {
-    setShowModal((prev) => !prev);
-  };
-
   const user = useSelector((state) => state.user.user);
   const selectedChat = useSelector((state) => state.chats.selectedChat);
   const chats = useSelector((state) => state.chats.chats);
-  const [loggedUser, setLoggedUser] = useState();
 
   const fetchChats = async () => {
     try {
@@ -60,10 +50,7 @@ const ChatsList = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
-    if (user.token) {
-      fetchChats();
-    }
+    fetchChats();
   }, [fetchAgain, user]);
 
   useEffect(() => {
@@ -122,7 +109,6 @@ const ChatsList = ({ fetchAgain }) => {
           dispatch(setChats([data, ...chats]));
         }
         dispatch(setSelectedChat(data));
-        setLoadingChat(false);
         setShowSearch(false);
         setSearch('');
         setSelectedUsers([]);
@@ -167,7 +153,7 @@ const ChatsList = ({ fetchAgain }) => {
               >
                 <p>
                   {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
+                    ? getSender(user, chat.users)
                     : chat.chatName}
                 </p>
               </ChatCard>
@@ -175,17 +161,14 @@ const ChatsList = ({ fetchAgain }) => {
           ) : (
             <Search
               showSearch={showSearch}
-              setShowSearch={setShowSearch}
-              groupChatName={groupChatName}
-              setGroupChatName={setGroupChatName}
-              setSearch={setSearch}
               search={search}
-              selectedUsers={selectedUsers}
-              setSelectedUsers={setSelectedUsers}
-              handleSearch={handleSearch}
+              setSearch={setSearch}
               loading={loading}
               searchResults={searchResults}
               handleSubmit={handleSubmit}
+              selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
+              setGroupChatName={setGroupChatName}
             />
           )}
         </Chats>

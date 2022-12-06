@@ -30,7 +30,6 @@ const UpdateGroupChatModal = ({
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [renameloading, setRenameLoading] = useState(false);
 
   const selectedChat = useSelector((state) => state.chats.selectedChat);
   const user = useSelector((state) => state.user.user);
@@ -62,7 +61,6 @@ const UpdateGroupChatModal = ({
     if (!groupChatName) return;
 
     try {
-      setRenameLoading(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -79,10 +77,8 @@ const UpdateGroupChatModal = ({
 
       dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
-      setRenameLoading(false);
     } catch (error) {
       console.log(error.response.data.message);
-      setRenameLoading(false);
     }
     setGroupChatName('');
   };
@@ -185,6 +181,8 @@ const UpdateGroupChatModal = ({
     document.addEventListener('keydown', keyPress);
     return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
+
+  //TODO add formik
 
   return (
     <>
