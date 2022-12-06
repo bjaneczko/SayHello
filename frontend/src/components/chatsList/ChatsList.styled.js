@@ -7,9 +7,10 @@ export const ChatsContainer = styled.div`
     border: none;
     border-radius: 0;
     height: 100%;
+    max-width: 760px;
   }
 
-  max-width: 640px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   background: #0e1d29;
