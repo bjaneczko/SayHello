@@ -20,25 +20,13 @@ const Search = ({
   loading,
   searchResults,
   handleSubmit,
+  handleGroup,
+  handleDelete,
   selectedUsers,
   setSelectedUsers,
   setGroupChatName,
 }) => {
-  const handleGroup = (userToAdd) => {
-    console.log(userToAdd);
-    if (selectedUsers?.includes(userToAdd)) {
-      console.log(`User already added`);
-      return;
-    }
-    console.log(`user aded`);
-    setSelectedUsers([...selectedUsers, userToAdd]);
-    console.log(selectedUsers);
-  };
-
-  const handleDelete = (delUser) => {
-    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
-  };
-
+  //TODO Add formik
   return (
     <>
       {showSearch ? (

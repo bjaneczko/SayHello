@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedChat, setChats } from '../../store/chatsSlice';
-import { getSender } from '../../config/ChatLogic';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { getSender } from '../../config/ChatLogic';
 import Search from '../search/Search';
 
 import {
@@ -45,7 +46,16 @@ const ChatsList = ({ fetchAgain }) => {
         dispatch(setChats(data));
       });
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
   };
 
@@ -80,7 +90,16 @@ const ChatsList = ({ fetchAgain }) => {
       setLoading(false);
       setSearchResults(data);
     } catch (error) {
-      console.log('Failed to Load the Search Results');
+      toast.error('Failed to load search results', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
   };
 
@@ -128,8 +147,38 @@ const ChatsList = ({ fetchAgain }) => {
         setSelectedUsers([]);
       }
     } catch (error) {
-      console.log(`Failed to Create the Chat!`);
+      toast.error('Failed to create new chat!', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
+  };
+
+  const handleGroup = (userToAdd) => {
+    if (selectedUsers?.includes(userToAdd)) {
+      toast.warn('User already added', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+      return;
+    }
+    setSelectedUsers([...selectedUsers, userToAdd]);
+  };
+
+  const handleDelete = (delUser) => {
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
   };
 
   return (
@@ -169,6 +218,8 @@ const ChatsList = ({ fetchAgain }) => {
               selectedUsers={selectedUsers}
               setSelectedUsers={setSelectedUsers}
               setGroupChatName={setGroupChatName}
+              handleGroup={handleGroup}
+              handleDelete={handleDelete}
             />
           )}
         </Chats>

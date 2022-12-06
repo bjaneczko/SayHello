@@ -6,6 +6,8 @@ import { setUser } from './store/userSlice';
 import Home from './pages/Home';
 import ChatPage from './pages/ChatPage';
 import styled from '@emotion/styled';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -45,6 +47,18 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/chats" element={<ChatPage />} />
       </Routes>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </AppContainer>
   );
 };

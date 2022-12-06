@@ -18,6 +18,7 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "react-spring": "^9.5.5",
+    "react-toastify": "^9.1.1",
     "react-type-animation": "^2.1.2",
     "scrollable-component": "^1.2.1",
     "socket.io-client": "^4.5.3",
