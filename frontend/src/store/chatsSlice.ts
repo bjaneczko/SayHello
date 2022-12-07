@@ -1,6 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface Chats {
+  chats: Object[];
+  selectedChat: Object[] | null;
+}
+
+const initialState: Chats = {
   chats: [],
   selectedChat: null,
 };
@@ -9,10 +14,10 @@ export const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
-    setChats: (state, action) => {
+    setChats: (state, action: PayloadAction<Object[]>) => {
       state.chats = action.payload;
     },
-    setSelectedChat: (state, action) => {
+    setSelectedChat: (state, action: PayloadAction<Object[] | null>) => {
       state.selectedChat = action.payload;
     },
   },
