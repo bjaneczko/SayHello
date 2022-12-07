@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, RefObject } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { User } from '../../types/types';
 
 import {
   Background,
@@ -11,8 +12,20 @@ import {
   LogoutButton,
 } from './ProfilModal.styled';
 
-export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
-  const modalRef = useRef();
+interface ModalProps {
+  showModal: boolean;
+  setShowModal: Function;
+  user: User;
+  logoutHandler: Function;
+}
+
+export const Modal = ({
+  showModal,
+  setShowModal,
+  user,
+  logoutHandler,
+}: ModalProps) => {
+  const modalRef = useRef() as RefObject<HTMLDivElement>;
 
   const animation = useSpring({
     config: {
@@ -22,14 +35,14 @@ export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
     transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
   });
 
-  const closeModal = (e) => {
+  const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
     }
   };
 
   const keyPress = useCallback(
-    (e) => {
+    (e: { key: string }) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
       }
@@ -47,15 +60,17 @@ export const Modal = ({ showModal, setShowModal, user, logoutHandler }) => {
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
           <animated.div style={animation}>
-            <ModalWrapper showModal={showModal}>
+            <ModalWrapper>
               <ModalContent>
                 <ModalHeader>{user?.name}</ModalHeader>
                 <ModalText>{user?.email}</ModalText>
-                <LogoutButton onClick={logoutHandler}>Logout</LogoutButton>
+                <LogoutButton onClick={() => logoutHandler()}>
+                  Logout
+                </LogoutButton>
               </ModalContent>
               <CloseModalButton
                 aria-label="Close modal"
-                onClick={() => setShowModal((prev) => !prev)}
+                onClick={() => setShowModal((prev: boolean) => !prev)}
               />
             </ModalWrapper>
           </animated.div>

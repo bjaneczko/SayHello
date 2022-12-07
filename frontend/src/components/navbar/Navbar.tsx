@@ -17,11 +17,11 @@ const Navbar = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
+  const openModal = (): void => {
     setShowModal((prev) => !prev);
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = (): void => {
     localStorage.removeItem('userInfo');
     navigate('/');
   };
