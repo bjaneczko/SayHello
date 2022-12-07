@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+interface MessageProps {
+  isSender?: boolean;
+}
+
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,7 +16,8 @@ export const ChatContainer = styled.div`
 `;
 
 export const Message = styled.div`
-  background: ${(props) => (props.isSender ? '#e6feff' : '#00adb3')};
+  background: ${(props: MessageProps) =>
+    props.isSender ? '#e6feff' : '#00adb3'};
   color: ${(props) => (props.isSender ? '#222831' : 'white')};
   margin-left: ${(props) => (props.isSender ? 'auto' : '0')};
   border-radius: 20px;
