@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppSelector } from '../../hooks/reducerHooks';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
 import { GoPerson } from 'react-icons/go';
 import { MdNotifications } from 'react-icons/md';
 import { Modal } from '../profilModal/ProfilModal';
