@@ -7,8 +7,8 @@ import axios from 'axios';
 import { FaArrowLeft, FaPen } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 import ScrollableChat from '../scrollableChat/ScrollableChat';
-import UpdateGroupChatModal from '../updateGroupChatModal/UpdateGroupChatModal';
-import { getSender } from '../../config/ChatLogic';
+import UpdateGroupChatModal from '../updateGroupChat/UpdateGroupChat';
+import { getSender } from '../../utils/getUserInfo';
 
 import {
   ChatHeader,

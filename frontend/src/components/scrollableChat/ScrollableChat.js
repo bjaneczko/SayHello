@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { isSameSenderMargin } from '../../config/ChatLogic';
+import { isSameSenderMargin } from '../../utils/getUserInfo';
 import 'scrollable-component';
 
 import { ChatContainer, Message } from './ScrollableChat.styled';
@@ -15,7 +15,7 @@ const ScrollableChat = ({ messages }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
+  console.log(messages[0]);
   return (
     <scrollable-component>
       <ChatContainer>

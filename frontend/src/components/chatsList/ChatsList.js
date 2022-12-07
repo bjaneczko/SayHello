@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedChat, setChats } from '../../store/chatsSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { getSender } from '../../config/ChatLogic';
+import { getSender } from '../../utils/getUserInfo';
 import Search from '../search/Search';
 
 import {
