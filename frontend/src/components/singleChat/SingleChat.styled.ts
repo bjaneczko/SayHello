@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+interface ButtonProps {
+  hideOnMobile?: boolean;
+}
+
 export const ChatHeader = styled.div`
   font-size: 24px;
   padding-bottom: 1rem;
@@ -13,7 +17,7 @@ export const ChatButton = styled.button`
   @media (max-width: 760px) {
     display: flex;
   }
-  display: ${(props) => (props.hideOnMobile ? 'none' : 'flex')};
+  display: ${(props: ButtonProps) => (props.hideOnMobile ? 'none' : 'flex')};
   background-color: #00adb5;
   border-radius: 1rem;
   border: none;

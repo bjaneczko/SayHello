@@ -15,7 +15,7 @@ const ScrollableChat = ({ messages }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  console.log(messages[0]);
+
   return (
     <scrollable-component>
       <ChatContainer>

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../hooks/typedReduxHooks';
 import { setSelectedChat } from '../../store/chatsSlice';
 import { toast } from 'react-toastify';
-import io from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import axios from 'axios';
 import { FaArrowLeft, FaPen } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 import ScrollableChat from '../scrollableChat/ScrollableChat';
 import UpdateGroupChatModal from '../updateGroupChat/UpdateGroupChat';
 import { getSender } from '../../utils/getUserInfo';
+
+import {
+  Message,
+  Chat,
+  ServerToClientEvents,
+  ClientToServerEvents,
+} from '../../types/types';
 
 import {
   ChatHeader,
@@ -23,15 +30,21 @@ import {
 
 // const ENDPOINT = 'https://say-hello-coo0.onrender.com';
 const ENDPOINT = 'http://localhost:5000';
-let socket, selectedChatCompare;
+let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+let selectedChatCompare: Chat;
 
-const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const dispatch = useDispatch();
+interface SingleChatProps {
+  fetchAgain: boolean;
+  setFetchAgain: Function;
+}
 
-  const selectedChat = useSelector((state) => state.chats.selectedChat);
-  const user = useSelector((state) => state.user.user);
+const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatProps) => {
+  const dispatch = useAppDispatch();
 
-  const [messages, setMessages] = useState([]);
+  const selectedChat = useAppSelector((state) => state.chats.selectedChat);
+  const user = useAppSelector((state) => state.user.user);
+
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -45,9 +58,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const messageinput = document.getElementById('messageinput');
+  const messagebutton = document.getElementById('messagebutton');
   messageinput?.addEventListener('keypress', function onEvent(event) {
     if (event.key === 'Enter') {
-      document.getElementById('messagebutton').click();
+      messagebutton?.click();
     }
   });
 
@@ -61,11 +75,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.emit('setup', user);
     socket.on('connected', () => setSocketConnected(true));
     socket.on(`typing`, () => setIsTyping(true));
-    socket.on(`stop typing`, () => setIsTyping(false));
-  }, []);
+    socket.on(`stopTyping`, () => setIsTyping(false));
+  }, [user]);
 
   useEffect(() => {
-    socket.on('message recieved', (newMessageRecieved) => {
+    socket.on('messageRecieved', (newMessageRecieved: Message) => {
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -93,7 +107,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       );
       setMessages(data);
       setLoading(false);
-      socket.emit('join chat', selectedChat._id);
+      socket.emit('joinChat', selectedChat._id);
     } catch (error) {
       toast.error(`Failed to load the messages, please refresh page`, {
         position: 'top-center',
@@ -108,9 +122,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-  const sendMessage = async (event) => {
+  const sendMessage = async () => {
     if (newMessage) {
-      socket.emit('stop typing', selectedChat._id);
+      socket.emit('stopTyping', selectedChat._id);
       try {
         const config = {
           headers: {
@@ -127,7 +141,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
 
-        socket.emit('new message', data);
+        socket.emit('newMessage', data);
         setMessages([...messages, data]);
       } catch (error) {
         toast.error('Failed to send the Message', {
@@ -144,7 +158,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-  const typingHandler = (e) => {
+  const typingHandler = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setNewMessage(e.target.value);
 
     if (!socketConnected) return;
@@ -160,7 +176,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       let timeNow = new Date().getTime();
       let timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timerLength && typing) {
-        socket.emit('stop typing', selectedChat._id);
+        socket.emit('stopTyping', selectedChat._id);
         setTyping(false);
       }
     }, timerLength);
@@ -183,7 +199,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             ) : (
               <>
                 {selectedChat.chatName}
-                <ChatButton onClick={openModal}>
+                <ChatButton onClick={() => openModal}>
                   <FaPen />
                 </ChatButton>
               </>
