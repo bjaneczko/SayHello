@@ -1,4 +1,5 @@
 import React from 'react';
+import { User } from '../../types/types';
 
 import {
   SearchContent,
@@ -11,7 +12,20 @@ import {
   ResultText,
   ResultsWrapper,
   UserBadge,
-} from '../search/Search.styled';
+} from './Search.styled';
+
+interface SearchProps {
+  showSearch: boolean;
+  search: string;
+  setSearch: Function;
+  loading: boolean;
+  searchResults: User[];
+  handleSubmit: Function;
+  handleGroup: Function;
+  handleDelete: Function;
+  selectedUsers: User[];
+  setGroupChatName: Function;
+}
 
 const Search = ({
   showSearch,
@@ -23,14 +37,13 @@ const Search = ({
   handleGroup,
   handleDelete,
   selectedUsers,
-  setSelectedUsers,
   setGroupChatName,
-}) => {
+}: SearchProps) => {
   //TODO Add formik
   return (
     <>
       {showSearch ? (
-        <SearchWrapper showSearch={showSearch}>
+        <SearchWrapper>
           <SearchContent>
             <InputContainer>
               <SearchInput
@@ -49,7 +62,7 @@ const Search = ({
               </InputContainer>
             )}
             <ResultsWrapper>
-              {selectedUsers?.map((user) => (
+              {selectedUsers?.map((user: User) => (
                 <UserBadge key={user._id} onClick={() => handleDelete(user)}>
                   {user.name} x
                 </UserBadge>
@@ -57,7 +70,7 @@ const Search = ({
             </ResultsWrapper>
             {loading
               ? 'Loading...'
-              : searchResults?.map((user) => (
+              : searchResults?.map((user: User) => (
                   <SearchResultContainer
                     key={user._id}
                     onClick={() => handleGroup(user)}
@@ -67,7 +80,7 @@ const Search = ({
                   </SearchResultContainer>
                 ))}
           </SearchContent>
-          <Button onClick={handleSubmit}>Create chat</Button>
+          <Button onClick={() => handleSubmit()}>Create chat</Button>
         </SearchWrapper>
       ) : null}
     </>
