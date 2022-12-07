@@ -16,6 +16,7 @@ export interface Message {
 }
 
 export interface Chat {
+  _id: string;
   chatName: string;
   createdAt: string;
   isGroupChat: boolean;
@@ -30,4 +31,19 @@ export interface updateGroupChatProps {
   setFetchAgain: Function;
   showModal: boolean;
   setShowModal: Function;
+}
+
+export interface ServerToClientEvents {
+  connected: () => void;
+  typing: () => void;
+  stopTyping: () => void;
+  messageRecieved: (newMessageRecieved: Message) => void;
+}
+
+export interface ClientToServerEvents {
+  setup: (user: User) => void;
+  joinChat: (selectedChat: Chat) => void;
+  typing: (selectedChat: Chat) => void;
+  stopTyping: (selectedChat: Chat) => void;
+  newMessage: (data: Message) => void;
 }
