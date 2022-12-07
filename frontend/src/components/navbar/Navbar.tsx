@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/reducerHooks';
 import { GoPerson } from 'react-icons/go';
 import { MdNotifications } from 'react-icons/md';
 import { Modal } from '../profilModal/ProfilModal';
@@ -26,7 +26,7 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const user = useSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user.user);
 
   return (
     <>
