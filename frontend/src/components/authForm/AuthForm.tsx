@@ -45,7 +45,11 @@ const AuthForm = () => {
   const [isNew, setIsNew] = useState(false);
   const navigate = useNavigate();
 
-  const submitHandler = async (name, email, password) => {
+  const submitHandler = async (
+    name: string,
+    email: string,
+    password: string
+  ) => {
     let data;
     await axios
       .post(`/api/user/${isNew ? '' : 'login'}`, {
