@@ -7,17 +7,16 @@ export const Background = styled.div`
   top: 65px;
   right: 0;
   z-index: 5;
+  display: flex;
+  justify-content: end;
 `;
 
 export const ModalWrapper = styled.div`
-  width: fit-content;
-  margin-left: auto;
   background: #0e1d29;
   color: white;
   position: relative;
   border: 5px solid #1c2a34;
   border-top: none;
-  padding: 1rem 2rem;
 `;
 
 export const ModalContent = styled.div`
@@ -26,6 +25,7 @@ export const ModalContent = styled.div`
   justify-content: center;
   align-items: center;
   line-height: 1.8;
+  padding: 1rem 2rem;
 `;
 
 export const ModalHeader = styled.div`
