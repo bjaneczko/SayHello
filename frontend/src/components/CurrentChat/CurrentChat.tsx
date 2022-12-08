@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector } from '../../hooks/typedReduxHooks';
+import { useAppSelector } from '../../hooks/reduxHooks';
 import SingleChat from '../singleChat/SingleChat';
 
 import { CurrentChatContainer } from './CurrentChat.styled';

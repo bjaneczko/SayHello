@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { setSelectedChat, setChats } from '../../store/chatsSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';

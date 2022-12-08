@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { ChatContainer, Message } from './ScrollableChat.styled';
 import { Message as MessageType } from '../../types/types';
-import { useAppSelector } from '../../hooks/typedReduxHooks';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 interface ScrollableChatProps {
   messages: MessageType[];
