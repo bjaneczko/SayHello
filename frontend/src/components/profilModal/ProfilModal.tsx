@@ -6,9 +6,7 @@ import {
   Background,
   ModalWrapper,
   ModalContent,
-  CloseModalButton,
   ModalHeader,
-  ModalText,
   LogoutButton,
 } from './ProfilModal.styled';
 
@@ -63,15 +61,10 @@ export const Modal = ({
             <ModalWrapper>
               <ModalContent>
                 <ModalHeader>{user?.name}</ModalHeader>
-                <ModalText>{user?.email}</ModalText>
                 <LogoutButton onClick={() => logoutHandler()}>
                   Logout
                 </LogoutButton>
               </ModalContent>
-              <CloseModalButton
-                aria-label="Close modal"
-                onClick={() => setShowModal((prev: boolean) => !prev)}
-              />
             </ModalWrapper>
           </animated.div>
         </Background>
