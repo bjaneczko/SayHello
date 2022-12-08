@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
 
+interface CurrentChatProps {
+  selectedChat: boolean;
+}
+
 export const CurrentChatContainer = styled.div`
   @media (max-width: 760px) {
-    display: ${(props) => (props.selectedChat ? 'flex' : 'none')};
+    display: ${(props: CurrentChatProps) =>
+      props.selectedChat ? 'flex' : 'none'};
     padding: 20px;
     border: none;
     border-radius: 0;

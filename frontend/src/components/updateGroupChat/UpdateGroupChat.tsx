@@ -1,14 +1,14 @@
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedChat } from '../../store/chatsSlice';
 import React, { useEffect, useCallback, useState } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { setSelectedChat } from '../../store/chatsSlice';
+import axios from 'axios';
 import { toast } from 'react-toastify';
+import { updateGroupChatProps, User } from '../../types/types';
 
 import {
-  ModalContainer,
-  ModalContent,
-  CloseModalButton,
+  Container,
+  Content,
+  CloseButton,
   UserBadge,
   ResultsWrapper,
   FormInput,
@@ -16,7 +16,7 @@ import {
   FormWrapper,
   SearchResultContainer,
   ResultHeader,
-} from './UpdateGroupChatModal.styled';
+} from './UpdateGroupChat.styled';
 
 const UpdateGroupChatModal = ({
   fetchMessages,
@@ -24,18 +24,18 @@ const UpdateGroupChatModal = ({
   setFetchAgain,
   showModal,
   setShowModal,
-}) => {
-  const dispatch = useDispatch();
+}: updateGroupChatProps) => {
+  const dispatch = useAppDispatch();
 
-  const [groupChatName, setGroupChatName] = useState();
+  const [groupChatName, setGroupChatName] = useState('');
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const selectedChat = useSelector((state) => state.chats.selectedChat);
-  const user = useSelector((state) => state.user.user);
+  const selectedChat = useAppSelector((state) => state.chats.selectedChat);
+  const user = useAppSelector((state) => state.user.user);
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query: string) => {
     setSearch(query);
     if (!query) {
       return;
@@ -88,7 +88,7 @@ const UpdateGroupChatModal = ({
       dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
     } catch (error) {
-      toast.error(error.response.data.message, {
+      toast.error('Can`t rename an group', {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: false,
@@ -102,8 +102,8 @@ const UpdateGroupChatModal = ({
     setGroupChatName('');
   };
 
-  const handleAddUser = async (user1) => {
-    if (selectedChat.users.find((u) => u._id === user1._id)) {
+  const handleAddUser = async (user1: User) => {
+    if (selectedChat.users.find((u: User) => u._id === user1._id)) {
       toast.warn('User already added', {
         position: 'top-center',
         autoClose: 2000,
@@ -151,7 +151,7 @@ const UpdateGroupChatModal = ({
       setFetchAgain(!fetchAgain);
       setLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message, {
+      toast.error(`Sorry there was an error while adding a user`, {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: false,
@@ -166,7 +166,7 @@ const UpdateGroupChatModal = ({
     setGroupChatName('');
   };
 
-  const handleRemove = async (user1) => {
+  const handleRemove = async (user1: User) => {
     if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
       toast.error('Only admin can remove someone!', {
         position: 'top-center',
@@ -212,13 +212,13 @@ const UpdateGroupChatModal = ({
       );
 
       user1._id === user._id
-        ? dispatch(setSelectedChat())
+        ? dispatch(setSelectedChat(null))
         : dispatch(setSelectedChat(data));
       setFetchAgain(!fetchAgain);
       fetchMessages();
       setLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message, {
+      toast.error(`Sorry there was an error while removing an user`, {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: false,
@@ -234,7 +234,7 @@ const UpdateGroupChatModal = ({
   };
 
   const keyPress = useCallback(
-    (e) => {
+    (e: { key: string }) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
       }
@@ -252,10 +252,10 @@ const UpdateGroupChatModal = ({
   return (
     <>
       {showModal ? (
-        <ModalContainer showModal={showModal}>
-          <ModalContent>
+        <Container>
+          <Content>
             <ResultsWrapper>
-              {selectedChat.users.map((u) => (
+              {selectedChat.users.map((u: User) => (
                 <UserBadge key={u._id} onClick={() => handleRemove(u)}>
                   {u.name} x
                 </UserBadge>
@@ -280,7 +280,7 @@ const UpdateGroupChatModal = ({
               {loading ? (
                 <div>Loading</div>
               ) : (
-                searchResult?.slice(0, 4).map((user) => (
+                searchResult?.slice(0, 4).map((user: User) => (
                   <SearchResultContainer
                     key={user._id}
                     onClick={() => handleAddUser(user)}
@@ -291,12 +291,12 @@ const UpdateGroupChatModal = ({
               )}
             </ResultsWrapper>
             <Button onClick={() => handleRemove(user)}>Leave group</Button>
-          </ModalContent>
-          <CloseModalButton
-            aria-label="Close modal"
-            onClick={() => setShowModal((prev) => !prev)}
+          </Content>
+          <CloseButton
+            aria-label="Close update modal"
+            onClick={() => setShowModal((prev: boolean) => !prev)}
           />
-        </ModalContainer>
+        </Container>
       ) : null}
     </>
   );

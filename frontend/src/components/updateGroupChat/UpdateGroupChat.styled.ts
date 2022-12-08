@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { MdClose } from 'react-icons/md';
 
-export const ModalContainer = styled.div`
+export const Container = styled.div`
   max-width: 400px;
   position: relative;
   background: #0e1d29;
@@ -12,7 +12,7 @@ export const ModalContainer = styled.div`
   margin: 0 auto;
 `;
 
-export const ModalContent = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@ export const ModalContent = styled.div`
   padding: 3rem 0 1rem; ;
 `;
 
-export const CloseModalButton = styled(MdClose)`
+export const CloseButton = styled(MdClose)`
   cursor: pointer;
   position: absolute;
   top: 20px;

@@ -1,11 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/reduxHooks';
 import SingleChat from '../singleChat/SingleChat';
 
 import { CurrentChatContainer } from './CurrentChat.styled';
 
-const CurrentChat = ({ fetchAgain, setFetchAgain }) => {
-  const selectedChat = useSelector((state) => state.chats.selectedChat);
+interface CurrentChatProps {
+  fetchAgain: boolean;
+  setFetchAgain: Function;
+}
+
+const CurrentChat = ({ fetchAgain, setFetchAgain }: CurrentChatProps) => {
+  const selectedChat = useAppSelector((state) => state.chats.selectedChat);
 
   return (
     <CurrentChatContainer selectedChat={selectedChat}>

@@ -1,6 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface Chats {
+  chats: any;
+  selectedChat: any;
+}
+
+const initialState: Chats = {
   chats: [],
   selectedChat: null,
 };
