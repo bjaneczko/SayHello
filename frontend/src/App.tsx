@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/userSlice';
 import Home from './pages/Home';
-import ChatPage from './pages/ChatPage';
+import ChatPage from './pages/Chat';
 import styled from '@emotion/styled';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
