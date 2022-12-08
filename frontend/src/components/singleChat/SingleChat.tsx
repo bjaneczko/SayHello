@@ -28,8 +28,8 @@ import {
   Button,
 } from './SingleChat.styled';
 
-// const ENDPOINT = 'https://say-hello-coo0.onrender.com';
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://say-hello-coo0.onrender.com';
+// const ENDPOINT = 'http://localhost:5000';
 let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 let selectedChatCompare: Chat;
 
