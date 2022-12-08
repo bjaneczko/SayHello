@@ -6,7 +6,6 @@ export const NavbarContainer = styled.div`
   width: 100%;
   background-color: #0e1d29;
   border-bottom: 5px solid #1c2a34;
-  z-index: 15;
 `;
 
 export const LogoContainer = styled.div`

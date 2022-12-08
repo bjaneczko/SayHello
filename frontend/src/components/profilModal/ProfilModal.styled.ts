@@ -3,10 +3,9 @@ import styled from '@emotion/styled';
 export const Background = styled.div`
   width: 100%;
   height: 100%;
+  z-index: 5;
   position: fixed;
   top: 65px;
-  right: 0;
-  z-index: 5;
   display: flex;
   justify-content: end;
 `;

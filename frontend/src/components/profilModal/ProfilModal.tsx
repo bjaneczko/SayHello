@@ -27,10 +27,10 @@ export const Modal = ({
 
   const animation = useSpring({
     config: {
-      duration: 250,
+      duration: 100,
     },
     opacity: showModal ? 1 : 0,
-    transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
+    // transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
   });
 
   const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
