@@ -20,11 +20,15 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    dispatch(setUser(userInfo));
-
-    if (!userInfo) navigate('/');
-    if (userInfo) navigate('/chats');
+    const userInfo = localStorage.getItem('userInfo');
+    let parsedUser;
+    if (typeof userInfo === 'string') {
+      parsedUser = JSON.parse(userInfo);
+      dispatch(setUser(parsedUser));
+      navigate('/chats');
+    } else {
+      navigate('/');
+    }
   }, [navigate]);
 
   return (
