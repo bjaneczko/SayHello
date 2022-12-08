@@ -22,7 +22,7 @@ export interface Chat {
   isGroupChat: boolean;
   latestMessage: string;
   updatedAt: string;
-  users: { key: string }[];
+  users: User[];
 }
 
 export interface updateGroupChatProps {

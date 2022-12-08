@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
 
+interface ChatsListStyleProps {
+  selectedChat?: boolean;
+  isSelected?: boolean;
+}
+
 export const ChatsContainer = styled.div`
   @media (max-width: 760px) {
-    display: ${(props) => (props.selectedChat ? 'none' : 'flex')};
+    display: ${(props: ChatsListStyleProps) =>
+      props.selectedChat ? 'none' : 'flex'};
     padding: 20px;
     border: none;
     border-radius: 0;
@@ -71,7 +77,8 @@ export const ChatCard = styled.div`
   padding: 0.75rem 1rem;
   display: flex;
   flex-direction: column;
-  background: ${(props) => (props.isSelected ? ' #007980' : '#00494d')};
+  background: ${(props: ChatsListStyleProps) =>
+    props.isSelected ? ' #007980' : '#00494d'};
 
   &:hover {
     cursor: pointer;

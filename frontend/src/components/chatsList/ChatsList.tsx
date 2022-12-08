@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import { setSelectedChat, setChats } from '../../store/chatsSlice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getSender } from '../../utils/getUserInfo';
 import Search from '../search/Search';
+import { User, Chat } from '../../types/types';
 
 import {
   ChatsContainer,
@@ -15,12 +16,12 @@ import {
   ChatCard,
 } from './ChatsList.styled';
 
-const ChatsList = ({ fetchAgain }) => {
-  const dispatch = useDispatch();
+const ChatsList = ({ fetchAgain }: { fetchAgain: boolean }) => {
+  const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [groupChatName, setGroupChatName] = useState();
   const [loading, setLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -29,9 +30,9 @@ const ChatsList = ({ fetchAgain }) => {
     setShowSearch((prev) => !prev);
   };
 
-  const user = useSelector((state) => state.user.user);
-  const selectedChat = useSelector((state) => state.chats.selectedChat);
-  const chats = useSelector((state) => state.chats.chats);
+  const user = useAppSelector((state) => state.user.user);
+  const selectedChat = useAppSelector((state) => state.chats.selectedChat);
+  const chats = useAppSelector((state) => state.chats.chats);
 
   const fetchChats = async () => {
     try {
@@ -46,7 +47,7 @@ const ChatsList = ({ fetchAgain }) => {
         dispatch(setChats(data));
       });
     } catch (error) {
-      toast.error(error.message, {
+      toast.error('Can`t fetch chats', {
         position: 'top-center',
         autoClose: 2000,
         hideProgressBar: false,
@@ -67,6 +68,7 @@ const ChatsList = ({ fetchAgain }) => {
     const delay = setTimeout(() => {
       handleSearch();
     }, 300);
+
     return () => {
       clearTimeout(delay);
     };
@@ -124,7 +126,7 @@ const ChatsList = ({ fetchAgain }) => {
         const userId = selectedUsers[0]._id;
         const { data } = await axios.post(`/api/chat`, { userId }, config);
 
-        if (!chats?.find((c) => c._id === data._id)) {
+        if (!chats?.find((c: Chat) => c._id === data._id)) {
           dispatch(setChats([data, ...chats]));
         }
         dispatch(setSelectedChat(data));
@@ -160,7 +162,7 @@ const ChatsList = ({ fetchAgain }) => {
     }
   };
 
-  const handleGroup = (userToAdd) => {
+  const handleGroup = (userToAdd: User) => {
     if (selectedUsers?.includes(userToAdd)) {
       toast.warn('User already added', {
         position: 'top-center',
@@ -177,7 +179,7 @@ const ChatsList = ({ fetchAgain }) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
-  const handleDelete = (delUser) => {
+  const handleDelete = (delUser: User) => {
     setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
   };
 
@@ -186,7 +188,7 @@ const ChatsList = ({ fetchAgain }) => {
       <ChatsContainer selectedChat={selectedChat}>
         <Header>
           <HeaderText>Chats</HeaderText>
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ display: 'flex', gap: '1 0px' }}>
             <Button onClick={openSearch}>
               {showSearch ? 'All chats' : 'New chat'}
             </Button>
@@ -194,7 +196,7 @@ const ChatsList = ({ fetchAgain }) => {
         </Header>
         <Chats>
           {chats && !showSearch ? (
-            chats.map((chat) => (
+            chats.map((chat: Chat) => (
               <ChatCard
                 onClick={() => dispatch(setSelectedChat(chat))}
                 key={chat._id}
@@ -216,7 +218,6 @@ const ChatsList = ({ fetchAgain }) => {
               searchResults={searchResults}
               handleSubmit={handleSubmit}
               selectedUsers={selectedUsers}
-              setSelectedUsers={setSelectedUsers}
               setGroupChatName={setGroupChatName}
               handleGroup={handleGroup}
               handleDelete={handleDelete}
