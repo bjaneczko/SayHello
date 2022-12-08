@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxHooks';
-import { setSelectedChat } from '../../store/chatsSlice';
+import { setSelectedChat, setNotification } from '../../store/chatsSlice';
 import { toast } from 'react-toastify';
 import { io, Socket } from 'socket.io-client';
 import axios from 'axios';
@@ -41,8 +41,9 @@ interface SingleChatProps {
 const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatProps) => {
   const dispatch = useAppDispatch();
 
-  const selectedChat = useAppSelector((state) => state.chats.selectedChat);
   const user = useAppSelector((state) => state.user.user);
+  const selectedChat = useAppSelector((state) => state.chats.selectedChat);
+  const notification = useAppSelector((state) => state.chats.notification);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
@@ -84,7 +85,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatProps) => {
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-        //TODO add notifications
+        if (!notification.includes(newMessageRecieved)) {
+          dispatch(setNotification([newMessageRecieved, ...notification]));
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessages([...messages, newMessageRecieved]);
       }
