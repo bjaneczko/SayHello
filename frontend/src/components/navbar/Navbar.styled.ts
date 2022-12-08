@@ -26,6 +26,7 @@ export const InformationContainer = styled.div`
     padding: 10px 0px;
   }
   display: flex;
+  align-items: center;
   padding: 10px 20px;
 `;
 
@@ -43,4 +44,30 @@ export const InformationModal = styled.button`
   &:hover {
     color: #00adb5;
   }
+`;
+
+export const NotificationBadge = styled.div`
+  position: absolute;
+  top: 7px;
+  margin-left: 15px;
+  width: 23px;
+  height: 23px;
+  background: red;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const NotificationCount = styled.p`
+  font-size: 0.8rem;
+  color: white;
+`;
+
+export const NotificationText = styled.p`
+  margin: 0;
+  padding: 2px 4px;
+  color: white;
+  background: #00adb5;
+  cursor: pointer;
 `;

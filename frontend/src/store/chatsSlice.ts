@@ -1,13 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { Chat, Message } from '../types/types';
 
 interface Chats {
-  chats: any;
+  chats: Chat[];
   selectedChat: any;
+  notification: Message[];
 }
 
 const initialState: Chats = {
   chats: [],
   selectedChat: null,
+  notification: [],
 };
 
 export const chatsSlice = createSlice({
@@ -20,9 +23,16 @@ export const chatsSlice = createSlice({
     setSelectedChat: (state, action) => {
       state.selectedChat = action.payload;
     },
+    setNotification: (state, action) => {
+      state.notification = action.payload;
+    },
+    clearNotification: (state) => {
+      state.notification = initialState.notification;
+    },
   },
 });
 
-export const { setChats, setSelectedChat } = chatsSlice.actions;
+export const { setChats, setSelectedChat, setNotification, clearNotification } =
+  chatsSlice.actions;
 
 export default chatsSlice.reducer;
