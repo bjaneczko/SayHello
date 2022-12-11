@@ -4,7 +4,7 @@ creating a group.
 
 ## Info
 
-Currently I am adding unit tests for components, redux and mock to test API responses.
+Currently I am adding unit tests for components and mocking to test API responses.
 
 # Demo
 [Click to checkout live version](https://say-hello-coo0.onrender.com/)
