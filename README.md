@@ -2,8 +2,12 @@
 Web application which allows you to chat with other users - directly or by
 creating a group.
 
+## Info
+
+Currently I am adding unit tests for components, redux and mock to test API responses.
+
 # Demo
-[SayHello](https://say-hello-coo0.onrender.com/)
+[Click to checkout live version](https://say-hello-coo0.onrender.com/)
 ```
 Email: test@user.com
 Password: password
