@@ -9,7 +9,7 @@ Currently I am adding unit tests for components and mocking to test API response
 # Demo
 [Click to checkout live version](https://say-hello-coo0.onrender.com/)
 ```
-Email: test@user.com
+Email: user@test.com
 Password: password
 ```
 
